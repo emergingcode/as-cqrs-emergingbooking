@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EmergingBooking.ManagementUI</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/site.css" />
+</head>
+<body>
+    <div class="container">
+        <main role="main" class="pb-3">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="/Management">Administration Area</a>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    @RenderSection("MenuNavigation", required: false)
+                </div>
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link active" href="/"><image src="/assets/baseline_exit_to_app_black_18dp.png" title="Voltar para a Home" /></a>
+                </div>
+            </nav>
+
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - Emerging Booking Management - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

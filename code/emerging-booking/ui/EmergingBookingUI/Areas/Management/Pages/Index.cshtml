@@ -1,0 +1,47 @@
+﻿@page
+
+@model EmergingBookingUI.Areas.Management.Pages.IndexModel
+
+@{
+}
+
+@section MenuNavigation {
+    <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="/Management/Register">Register a Hotel</a>
+    </div>
+}
+
+<br />
+
+<h2 class="text-center">Availble Hotels</h2>
+
+<table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col" class="text-center">Actions</th>
+            <th scope="col">Name</th>
+            <th scope="col" class="text-center">Category</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col" class="text-center">Registered Rooms</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var hotel in Model.Hotels)
+        {
+            <tr>
+                @* TODO: Implement edit address, contacts and add room *@
+                <th scope="row">
+                    <a href="/Management/ListRooms/@hotel.Code">Edit Address</a> |
+                    <a href="/Management/ListRooms/@hotel.Code">Edit Contacts</a> |
+                    <a href="/Management/ListRooms/@hotel.Code">List Roms</a>
+                </th>
+                <td>@hotel.Name</td>
+                <td class="text-center">@hotel.StarsOfCategory</td>
+                <td>@hotel.ContactEmail</td>
+                <td>@hotel.ContactPhone</td>
+                <td class="text-center">@hotel.Rooms</td>
+            </tr>
+        }
+    </tbody>
+</table>

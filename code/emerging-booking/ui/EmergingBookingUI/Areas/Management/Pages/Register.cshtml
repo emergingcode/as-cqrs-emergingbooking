@@ -1,0 +1,65 @@
+﻿@page
+
+@model EmergingBookingUI.Areas.Management.Pages.RegisterModel
+
+@{
+}
+
+<h2>Register a Hotel</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label for="exampleFormControlInput1">Name</label>
+        <input asp-for="NewHotel.Name" class="form-control" id="hotel-name" placeholder="Hotel Name" required>
+    </div>
+    <div class="form-group">
+        <label for="customRange1">Start Rating</label>
+        <select class="custom-select mr-sm-2" name="NewHotel.StarsOfCategory" id="hotel-stars-category">
+            <option selected>Choose...</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+            <option value="4">Four</option>
+            <option value="5">Five</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlInput1">Street</label>
+        <input asp-for="NewHotel.Street" class="form-control" id="hotel-street" placeholder="Street" required>
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlInput1">District</label>
+        <input asp-for="NewHotel.District" class="form-control" id="hotel-district" placeholder="District" required>
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlInput1">City</label>
+        <input asp-for="NewHotel.City" class="form-control" id="hotel-city" placeholder="City" required>
+        <div class="invalid-feedback">
+            Please choose a city.
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlInput1">Country</label>
+        <input asp-for="NewHotel.Country" class="form-control" id="hotel-country" placeholder="Country" required>
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlInput1">Zipcode</label>
+        <input asp-for="NewHotel.Zipcode" class="form-control" id="hotel-zipcode" placeholder="Zipcode" required>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">@@</span>
+        </div>
+        <input asp-for="NewHotel.Email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1" required>
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlInput1">Phone</label>
+        <input asp-for="NewHotel.Phone" class="form-control" id="hotel-phone" placeholder="Phone" required>
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlInput1">Mobile</label>
+        <input asp-for="NewHotel.Mobile" class="form-control" id="hotel-mobile" placeholder="Mobile" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

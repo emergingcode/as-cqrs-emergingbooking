@@ -1,0 +1,173 @@
+﻿@page "{handler?}/{searchString?}"
+
+@model EmergingBookingUI.AvailableRoomsModel
+
+@{
+    ViewData["Title"] = "Available Rooms";
+}
+
+<h1>Available Rooms</h1>
+
+<div class="col-md-12">
+    <div class="row">
+        <form method="get">
+            <div class="row">
+                <div class="col">
+                    <input id="checkin-datepicker" class="form-control" name="SearchChecking" placeholder="Checking" required>
+                </div>
+                <div class="col">
+                    <input id="checkout-datepicker" class="form-control" name="SearchCheckout" placeholder="Checkout" required>
+                </div>
+                <div class="col">
+                    <button asp-page-handler="AvailableRooms" type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="spacer5"></div>
+
+    <div class="row">
+        <div class="card-deck">
+            <div class="row">
+                @{
+                    foreach (var availableRoom in Model.AvailableRooms)
+                    {
+                        <div class="col-sm-3">
+                            <div class="card">
+                                @* TODO: Complete the Booking task adding controls whose values allow complete a room booking *@
+                                <img src="~/assets/room-fire-safety.jpg" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">@availableRoom.HotelName</h5>
+                                    <p class="card-text">@availableRoom.RoomName</p>
+                                    @{
+                                        for (int i = 1; i <= 5; i++)
+                                        {
+                                            if (availableRoom.StarsOfCategory >= i)
+                                            {
+                                                <span class="fa fa-star star-checked"></span>
+                                            }
+                                            else
+                                            {
+                                                <span class="fa fa-star"></span>
+                                            }
+                                        }
+                                    }
+                                    <p class="card-text">@availableRoom.HotelAddress</p>
+
+                                    @if (@availableRoom.UnavailableDateFrom != DateTime.MinValue)
+                                    {
+                                        <p class="card-text text-center text-black-50">Unavailable between:</p>
+                                        <p class="card-text text-center text-danger">
+                                            @availableRoom.UnavailableDateFrom.ToString("yyyy-MM-dd")
+                                            <br />and
+                                            <br />@availableRoom.UnavailableDateTo.ToString("yyyy-MM-dd")
+                                        </p>
+                                    }
+
+                                    <p class="card-text">
+                                        <form method="post">
+                                            <div class="row">
+                                                <div class="col text-center">
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@@mdo">Open modal for @@mdo</button>
+
+                                                    <input type="hidden" name="temp_hotelCode" value="@availableRoom.HotelCode" />
+                                                    <input type="hidden" name="temp_roomCode" value="@availableRoom.RoomCode" />
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Booking</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="form-group">
+                        Checkin: <label class="col-form-label" id="selected-checkin"></label>
+                        <br />
+                        Checkout: <label class="col-form-label" id="selected-checkout"></label>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Number of Guests:</label>
+                        <select id="number-of-guests" name="numberOfGuests">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value=">4">>4</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Guest:</label>
+                        <label for="message-text" class="col-form-label" name="guestName"><b>emerging.code</b></label>
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Do you want to include Breakfast?</label>
+                        <input type="checkbox" id="breakfast-included" name="breakfastIncluded" checked="checked" />
+                    </div>
+                    <div class="col text-center">
+                        <button asp-page-handler="BookThisRoom" type="submit" class="btn btn-success">Book Me!</button>
+                        <input type="hidden" name="hotelCode" />
+                        <input type="hidden" name="roomCode" />
+                        <input type="hidden" name="guestName" value="emerging.code" />
+                        <input type="hidden" name="checkin" value="@Model.SearchChecking" />
+                        <input type="hidden" name="checkout" value="@Model.SearchCheckout" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Send message</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        @{
+            var checkin = Model.SearchChecking == DateTime.MinValue ? string.Empty : Model.SearchChecking.ToString("MM/dd/yyyy");
+            var checkout = Model.SearchCheckout == DateTime.MinValue ? string.Empty : Model.SearchCheckout.ToString("MM/dd/yyyy");
+        }
+        $('#checkin-datepicker').datepicker({
+            uiLibrary: 'bootstrap4',
+            value: '@checkin'
+        });
+
+        $('#checkout-datepicker').datepicker({
+            uiLibrary: 'bootstrap4',
+            value: '@checkout'
+        });
+
+        $('#exampleModal').on('show.bs.modal', function () {
+            var checkin = $("input[id='checkin-datepicker']").val();
+            var checkout = $("input[id='checkout-datepicker']").val();
+            var hotelCode = $("input[name='temp_hotelCode']").val();
+            var roomCode = $("input[name='temp_roomCode']").val();
+
+            var modal = $(this);
+
+            modal.find(".modal-body label[id='selected-checkin']").text(checkin);
+            modal.find(".modal-body label[id='selected-checkout']").text(checkout);
+
+            modal.find(".modal-body input[name='hotelCode']").val(hotelCode);
+            modal.find(".modal-body input[name='roomCode']").val(roomCode);
+        })
+    </script>
+}

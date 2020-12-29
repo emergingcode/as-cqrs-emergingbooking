@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Management\**" />
+    <EmbeddedResource Remove="Management\**" />
+    <None Remove="Management\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.60.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Infrastrucuture\EmergingBooking.Infrastructure.CQRS\EmergingBooking.Infrastructure.CQRS.csproj" />
+    <ProjectReference Include="..\..\Infrastrucuture\EmergingBooking.Infrastructure.Storage.SqlServer\EmergingBooking.Infrastructure.Storage.SqlServer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Hotel\Processors\" />
+  </ItemGroup>
+</Project>

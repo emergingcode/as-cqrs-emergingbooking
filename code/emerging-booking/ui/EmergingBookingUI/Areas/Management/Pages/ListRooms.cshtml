@@ -1,0 +1,41 @@
+﻿@page "{hotelCode:guid}"
+
+@model EmergingBookingUI.Areas.Management.Pages.ListRoomsModel
+
+@section MenuNavigation {
+    <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="/Management/RegisterRoom/@Model.HotelCode">Register a Room</a>
+    </div>
+}
+
+<br />
+
+<h2 class="text-center">Registered Rooms</h2>
+
+<form method="post">
+</form>
+<table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col" class="text-center">Capacity</th>
+            <th scope="col" class="text-center">Price Per Night</th>
+            <th scope="col">Amenities</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var room in Model.Rooms)
+        {
+            <tr>
+                <th scope="row">
+                    <button type="submit" asp-page-handler="Delete" asp-route-roomCode="@room.Code" class="btn btn-danger">Delete</button>
+                </th>
+                <td>@room.Name</td>
+                <td class="text-center">@room.Capacity</td>
+                <td class="text-center">@string.Format("{0:C}", room.PricePerNight)</td>
+                <td>@room.Amenities</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,33 @@
+﻿@page "{hotelCode:guid}"
+
+@model EmergingBookingUI.Areas.Management.Pages.RegisterRoomModel
+
+@{
+}
+
+<h2>Register a Room</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label for="exampleFormControlInput1">Name</label>
+        <input asp-for="NewRoom.Name" class="form-control" id="room-name" placeholder="Room Name" required>
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlInput1">Description</label>
+        <input asp-for="NewRoom.Description" class="form-control" id="room-description" placeholder="Room Description" required>
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlInput1">Capacity</label>
+        <input asp-for="NewRoom.Capacity" class="form-control" id="room-capacity" placeholder="Room Capacity" required>
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlInput1">Available Quantity</label>
+        <input asp-for="NewRoom.AvailableQuantity" class="form-control" id="room-available-quantity" placeholder="Room Available Quantity" required>
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlInput1">Price per Night</label>
+        <input asp-for="NewRoom.PricePerNight" class="form-control" id="room-price-per-night" placeholder="Room Price Per Night" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
