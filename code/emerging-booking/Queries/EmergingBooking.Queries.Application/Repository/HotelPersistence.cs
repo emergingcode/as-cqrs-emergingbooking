@@ -37,8 +37,8 @@ namespace EmergingBooking.Queries.Application.Repository
                                                                         ,[ContactMobile]
                                                                         ,[ContactPhone]
                                                                         ,[ContactEmail]
-	                                                                    , (SELECT COUNT(1) FROM [EmergingBookingDb].[dbo].[Rooms] AS R WHERE r.HotelCode = H.Code) AS Rooms
-                                                                    FROM [EmergingBookingDb].[dbo].[Hotels] AS H
+	                                                                    , (SELECT COUNT(1) FROM [EmergingBooking].[dbo].[Rooms] AS R WHERE r.HotelCode = H.Code) AS Rooms
+                                                                    FROM [EmergingBooking].[dbo].[Hotels] AS H
                                                                 ");
             }
         }

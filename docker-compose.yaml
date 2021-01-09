@@ -1,35 +1,30 @@
-version: "3"
+version: "3.4"
 
 services:
   ravendb:
     image: ravendb/ravendb
-    volumes:
-      - ravendb-data:/opt/RavenDB/Server/RavenData    
     container_name: ec-ravendb
-    hostname: ravendbserver
+    hostname: ravendb-server
     networks: 
       - ravendbnet
     ports:
-      - 8080:8080
-      - 38888:38888
+      - "8080:8080"
+      - "38888:38888"
     environment:
       RAVEN_Setup_Mode: "None"
       RAVEN_License_Eula_Accepted: "true"
 
   sqlserver:
-    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
-    volumes:
-      - dbsql-data:/var/opt/mssql
-    container_name: ec-sqlserver-2017-ubuntu
-    hostname: sqlserver
+    image: mcr.microsoft.com/mssql/server
+    container_name: ec-aswmoderna-mssql
+    hostname: mssqls-server
     networks: 
       - sqlservernet
     ports:
-      - 1433:1433
+      - "1433:1433"
     environment: 
-      ACCEPT_EULA: Y
-      SA_PASSWORD: EmergingB00king@2019
-      MSSQL_PID: Express
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=EmergingB00king@2019
 
   kafdrop:
     image: obsidiandynamics/kafdrop
@@ -56,10 +51,6 @@ services:
       KAFKA_RESTART_ATTEMPTS: "10"
       KAFKA_RESTART_DELAY: "5"
       ZOOKEEPER_AUTOPURGE_PURGE_INTERVAL: "0"
-
-volumes:
-  ravendb-data:
-  dbsql-data:          
 
 networks:
   ravendbnet:
