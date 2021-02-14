@@ -15,7 +15,7 @@ namespace EmergingBooking.Management.Application.Handlers.Events
             {
                 using (var producer =
                         new KafkaProducer<string, HotelEventBaseV1>(
-                            "dev.emergingbooking.management.hotel-events",
+                            "dev-emergingbooking-management-hotel-events",
                             "kafkaserver:9092"))
                 {
                     await producer.ProduceMessage(@event, @event.PartitionKey());

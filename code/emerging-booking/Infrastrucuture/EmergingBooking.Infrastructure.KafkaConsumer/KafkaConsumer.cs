@@ -39,7 +39,8 @@ namespace EmergingBooking.Infrastructure.KafkaConsumer
                 StatisticsIntervalMs = 5000,
                 SessionTimeoutMs = 6000,
                 EnablePartitionEof = true,
-                AutoOffsetReset = AutoOffsetReset.Earliest
+                AutoOffsetReset = AutoOffsetReset.Earliest,
+                ApiVersionRequest = false
             };
 
             JsonCreationConverter = jsonCreationConverter;

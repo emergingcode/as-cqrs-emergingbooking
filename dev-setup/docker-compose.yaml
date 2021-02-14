@@ -1,0 +1,90 @@
+version: "3.4"
+
+services:
+  ravendb:
+    image: ravendb/ravendb
+    container_name: ec-ravendb
+    hostname: ravendb-server
+    networks: 
+      - ravendbnet
+    ports:
+      - "8080:8080"
+      - "38888:38888"
+    environment:
+      RAVEN_Setup_Mode: "None"
+      RAVEN_License_Eula_Accepted: "true"
+      RAVEN_Security_UnsecuredAccessAllowed: "PrivateNetwork"
+
+  mssqldata:
+    image: microsoft/mssql-server-linux:latest
+    networks: 
+      - sqlservernet
+    entrypoint: /bin/bash
+
+  sqlserver:
+    image: microsoft/mssql-server-linux:latest
+    container_name: ec-aswmoderna-mssql
+    hostname: mssqls-server
+    networks: 
+      - sqlservernet
+    ports:
+      - 1433:1433
+    volumes:
+      - /var/opt/mssql
+      # we copy our scripts onto the container
+      - ./:/usr/src/app 
+    # bash will be executed from that path, our scripts folder
+    working_dir: /usr/src/app 
+    # run the entrypoint.sh that will import the data AND sqlserver
+    command: bash -c ' chmod +x ./entrypoint.sh; ./entrypoint.sh & /opt/mssql/bin/sqlservr;'
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: EmergingB00king@2019
+      DATABASE_NAME: EmergingBooking
+    # don't use this if you don't want to persit data between docker up and down
+    volumes_from:
+      - mssqldata
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    ports:
+      - 22181:22181
+    networks: 
+      - kafkanet
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 22181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    networks: 
+      - kafkanet
+    depends_on:
+      - zookeeper
+    ports:
+      - 9092:9092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:22181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1      
+      
+  # kafdrop:
+    # image: obsidiandynamics/kafdrop
+    # restart: "no"
+    # networks: 
+      # - kafkanet
+    # ports:
+      # - "9000:9000"
+    # environment:
+      # KAFKA_BROKERCONNECT: "kafka:29092"
+      # JVM_OPTS: "-Xms16M -Xmx48M -Xss180K -XX:-TieredCompilation -XX:+UseStringDeduplication -noverify"
+    # depends_on:
+      # - "kafka"
+
+networks:
+  ravendbnet:
+  sqlservernet:
+  kafkanet:

@@ -1,6 +1,6 @@
 ﻿#addin nuget:?package=Cake.SqlServer&loaddependencies=true
 
-var dbName = "EmergingBookingDb";
+var dbName = "EmergingBooking";
 var connectionString = @"Server=localhost,1433;User=sa;Password=EmergingB00king@2019;";
 var databaseName = $@"Database={dbName};";
 var target = Argument("target", "Default");

@@ -12,7 +12,7 @@ namespace EmergingBooking.Reservation.Application.Handlers
         {
             using (var producer =
                 new KafkaProducer<string, ReservationEventBaseV1>(
-                    "dev.emergingbooking.reservation.booking-events",
+                    "dev-emergingbooking-reservation-booking-events",
                     "kafkaserver:9092"))
             {
                 await producer.ProduceMessage(@event, @event.PartitionKey());

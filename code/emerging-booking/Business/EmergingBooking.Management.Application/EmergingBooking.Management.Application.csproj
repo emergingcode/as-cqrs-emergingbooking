@@ -1,12 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="MonoidSharp" Version="0.0.2-alpha" />
     <PackageReference Include="RavenDB.Client" Version="4.1.5" />
+    <PackageReference Include="Confluent.Kafka" Version="1.5.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -14,11 +15,4 @@
     <ProjectReference Include="..\..\Infrastrucuture\EmergingBooking.Infrastructure.KafkaProducer\EmergingBooking.Infrastructure.KafkaProducer.csproj" />
     <ProjectReference Include="..\..\Infrastrucuture\EmergingBooking.Infrastructure.Storage.RavenDB\EmergingBooking.Infrastructure.Storage.RavenDB.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Confluent.Kafka">
-      <HintPath>C:\Users\jrobe\.nuget\packages\confluent.kafka\1.0.0-rc4\lib\netstandard1.3\Confluent.Kafka.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>
