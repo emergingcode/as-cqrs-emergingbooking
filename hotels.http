@@ -1,0 +1,58 @@
+@baseurl = http://localhost:5000/api/hotel
+@hotelCode = cf229cf8-2a0a-4a2e-a274-565cbad6e8d7
+
+### Create a Hotel
+POST {{baseurl}} HTTP/1.1
+Content-Type: application/json
+
+{
+	"Name": "Hotel Test 1",
+	"StarsOfCategory": 5,
+	"Street": "Strest Test",
+	"District": "District Test",
+	"City": "City Test",
+	"Country": "Country Test",
+	"Zipcode": 4200163,
+	"Email": "jroberto.araujo@gmail.com",
+	"Phone": "939 111 444",
+	"Mobile": "939 444 777"
+}
+
+### Update the Hotel Address
+PUT {{baseurl}}/{{hotelCode}}/address/update
+Content-Type: application/json
+
+{
+  "street": "Rua Altino Coelho, n° 700",
+  "district": "Porto",
+  "city": "Maia",
+  "country": "Portugal",
+  "zipcode": 4470180
+}
+
+### Update the Hotel Contacts
+PUT {{baseurl}}/{{hotelCode}}/address/contacts
+Content-Type: application/json
+
+{
+	"Email": "jj@test.com.br",
+	"Phone": "222 182 779",
+	"Mobile": "999 123 875"
+}
+
+### Add room to a Hotel
+POST {{baseurl}}/{{hotelCode}}/room
+Content-Type: application/json
+
+{
+	"Name": "Four Single Bed",
+	"Description": "Great bedroom with a great view of Eiffel Tower",
+	"Capacity": 4,
+	"AvailableQuantity": 5,
+	"PricePerNight": 65.00,
+	"Amenities": [
+		"Wi-fi",
+		"Bathtub",
+		"Tv Led"
+	]
+}

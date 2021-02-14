@@ -43,6 +43,42 @@ namespace EmergingBooking.Queries.Application.Repository
             }
         }
 
+        internal async Task<CurrentContacts> RetrieveCurrentContacts(Guid hotelCode)
+        {
+            using (var connection = _sqlServerStoreHolder.DbConnection)
+            {
+                connection.Open();
+
+                return await connection
+                    .QueryFirstAsync<CurrentContacts>(@"
+                                                    SELECT ContactEmail as Email,
+                                                           ContactPhone as Phone,
+                                                           ContactMobile as Mobile
+                                                    FROM Hotels
+                                                    Where Code = @hotelCode",
+                        new { hotelCode });
+            }
+        }
+
+        internal async Task<CurrentAddress> RetrieveCurrentAddress(Guid hotelCode)
+        {
+            using (var connection = _sqlServerStoreHolder.DbConnection)
+            {
+                connection.Open();
+
+                return await connection
+                    .QueryFirstAsync<CurrentAddress>(@"
+                                                    SELECT AddressStreet as Street,
+                                                           AddressDistrict as District,
+                                                           AddressCity as City,
+                                                           AddressCountry as Country,
+                                                           ZipCode
+                                                    FROM Hotels
+                                                    Where Code = @hotelCode",
+                        new { hotelCode });
+            }
+        }
+
         public async Task<IEnumerable<RoomListItem>> RetrieveRooms(Guid hotelCode)
         {
             using (var connection = _sqlServerStoreHolder.DbConnection)

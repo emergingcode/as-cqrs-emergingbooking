@@ -2,8 +2,7 @@
 
 @model EmergingBookingUI.Areas.Management.Pages.IndexModel
 
-@{
-}
+@{ }
 
 @section MenuNavigation {
     <div class="navbar-nav">
@@ -29,19 +28,18 @@
     <tbody>
         @foreach (var hotel in Model.Hotels)
         {
-            <tr>
-                @* TODO: Implement edit address, contacts and add room *@
-                <th scope="row">
-                    <a href="/Management/ListRooms/@hotel.Code">Edit Address</a> |
-                    <a href="/Management/ListRooms/@hotel.Code">Edit Contacts</a> |
-                    <a href="/Management/ListRooms/@hotel.Code">List Roms</a>
-                </th>
-                <td>@hotel.Name</td>
-                <td class="text-center">@hotel.StarsOfCategory</td>
-                <td>@hotel.ContactEmail</td>
-                <td>@hotel.ContactPhone</td>
-                <td class="text-center">@hotel.Rooms</td>
-            </tr>
-        }
+<tr>
+    <th scope="row">
+        <a href="/Management/UpdateHotelAddress/@hotel.Code">Edit Address</a> |
+        <a href="/Management/UpdateHotelContacts/@hotel.Code">Edit Contacts</a> |
+        <a href="/Management/ListRooms/@hotel.Code">List Roms</a>
+    </th>
+    <td>@hotel.Name</td>
+    <td class="text-center">@hotel.StarsOfCategory</td>
+    <td>@hotel.ContactEmail</td>
+    <td>@hotel.ContactPhone</td>
+    <td class="text-center">@hotel.Rooms</td>
+</tr>
+}
     </tbody>
 </table>

@@ -63,9 +63,9 @@ namespace EmergingBooking.Message.Consumer.Repository
                     await connection.UpdateAsync(hotelContactsData);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
