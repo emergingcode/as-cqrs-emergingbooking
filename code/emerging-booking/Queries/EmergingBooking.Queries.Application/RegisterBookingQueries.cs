@@ -27,6 +27,9 @@ namespace EmergingBooking.Queries.Application
             services.AddTransient<IQueryHandler<HotelQuery, IEnumerable<HotelListItem>>, HotelQueryHandler>();
             services.AddTransient<IQueryHandler<AvailableRoomsQuery, IEnumerable<AvailableRooms>>, HotelQueryHandler>();
             services.AddTransient<IQueryHandler<RoomQuery, IEnumerable<RoomListItem>>, HotelQueryHandler>();
+            services.AddTransient<IQueryHandler<CurrentAddressQuery, CurrentAddress>, HotelQueryHandler>();
+            services.AddTransient<IQueryHandler<CurrentContactsQuery, CurrentContacts>, HotelQueryHandler>();
+
             services.AddSingleton<ReservationPersistence, ReservationPersistence>();
             services.AddSingleton<HotelPersistence, HotelPersistence>();
 

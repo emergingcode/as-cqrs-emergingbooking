@@ -11,7 +11,9 @@ namespace EmergingBooking.Queries.Application.Hotel.Processors
     public class HotelQueryHandler :
         IQueryHandler<HotelQuery, IEnumerable<HotelListItem>>,
         IQueryHandler<RoomQuery, IEnumerable<RoomListItem>>,
-        IQueryHandler<AvailableRoomsQuery, IEnumerable<AvailableRooms>>
+        IQueryHandler<AvailableRoomsQuery, IEnumerable<AvailableRooms>>,
+        IQueryHandler<CurrentAddressQuery, CurrentAddress>,
+        IQueryHandler<CurrentContactsQuery, CurrentContacts>
     {
         private readonly HotelPersistence _hotelPersistence;
 
@@ -33,6 +35,16 @@ namespace EmergingBooking.Queries.Application.Hotel.Processors
         public async Task<IEnumerable<AvailableRooms>> ExecuteQueryAsync(AvailableRoomsQuery queryParameters)
         {
             return await _hotelPersistence.RetrieveAvailableRooms(queryParameters.Checkin, queryParameters.Checkout);
+        }
+
+        public async Task<CurrentAddress> ExecuteQueryAsync(CurrentAddressQuery queryParameters)
+        {
+            return await _hotelPersistence.RetrieveCurrentAddress(queryParameters.HotelCode);
+        }
+
+        public async Task<CurrentContacts> ExecuteQueryAsync(CurrentContactsQuery queryParameters)
+        {
+            return await _hotelPersistence.RetrieveCurrentContacts(queryParameters.HotelCode);
         }
     }
 }

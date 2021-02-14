@@ -40,7 +40,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmergingBooking.Infrastruct
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmergingBooking.Infrastructure.Storage.SqlServer", "Infrastrucuture\EmergingBooking.Infrastructure.Storage.SqlServer\EmergingBooking.Infrastructure.Storage.SqlServer.csproj", "{DE4BE31E-5785-485F-8C46-C6F3342FA854}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "User Interface", "User Interface", "{FCED5E39-7702-4D8D-AD4C-199EB2200945}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebUi", "WebUi", "{FCED5E39-7702-4D8D-AD4C-199EB2200945}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmergingBookingUI", "ui\EmergingBookingUI\EmergingBookingUI.csproj", "{F8DD2EDE-D59A-4886-9639-0F590A788FFE}"
 EndProject

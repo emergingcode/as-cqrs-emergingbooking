@@ -48,6 +48,26 @@ namespace EmergingBookingApi.Controllers
             return Ok(result);
         }
 
+        [HttpGet("{hotelCode:guid}/address/current")]
+        [ProducesResponseType(typeof(CurrentAddress), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetCurrentAddress(Guid hotelCode)
+        {
+            var result = await _queryProcessor
+                .ExecuteQueryAsync<CurrentAddressQuery, CurrentAddress>(new CurrentAddressQuery(hotelCode));
+            return Ok(result);
+        }
+
+        [HttpGet("{hotelCode:guid}/contacts/current")]
+        [ProducesResponseType(typeof(CurrentContacts), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetCurrentContacts(Guid hotelCode)
+        {
+            var result = await _queryProcessor
+                .ExecuteQueryAsync<CurrentContactsQuery, CurrentContacts>(new CurrentContactsQuery(hotelCode));
+            return Ok(result);
+        }
+
         [HttpGet("available-rooms")]
         [ProducesResponseType(typeof(IEnumerable<AvailableRooms>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -125,7 +145,7 @@ namespace EmergingBookingApi.Controllers
         [HttpPost("{hotelCode:guid}/room")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-        public async Task<IActionResult> AddHotelRoom(Guid hotelCode, [FromBody]HotelRoom hotelRoom)
+        public async Task<IActionResult> AddHotelRoom(Guid hotelCode, [FromBody] HotelRoom hotelRoom)
         {
             var result = await _commandDispatcher.ExecuteAsync(
                 new AddRoomToHotel(hotelCode,

@@ -11,7 +11,7 @@ namespace EmergingBooking.Management.Application.Domain
     internal class Contacts : ValueObject
     {
         [JsonConstructor]
-        private Contacts(string phone, string mobile, string email)
+        private Contacts(string email, string phone, string mobile)
         {
             Phone = phone;
             Mobile = mobile;
@@ -23,26 +23,26 @@ namespace EmergingBooking.Management.Application.Domain
         public string Email { get; }
 
         public static Outcome<Contacts> Create(
+            PossibleBe<string> email,
             PossibleBe<string> phone,
-            PossibleBe<string> mobile,
-            PossibleBe<string> email)
+            PossibleBe<string> mobile)
         {
-            if (AreContactsValid(phone, mobile, email))
+            if (AreContactsValid(email, phone, mobile))
             {
                 return Outcome.Successfully(
                     new Contacts(
+                        email.Value,
                         phone.Value,
-                        mobile.Value,
-                        email.Value));
+                        mobile.Value));
             }
 
             return Outcome.Failed<Contacts>("All contacts are invalid. Please verify all contact values!");
         }
 
         private static bool AreContactsValid(
+            PossibleBe<string> email,
             PossibleBe<string> phone,
-            PossibleBe<string> mobile,
-            PossibleBe<string> email)
+            PossibleBe<string> mobile)
         {
             return phone.HasValue && mobile.HasValue && email.HasValue;
         }
