@@ -34,7 +34,7 @@ namespace EmergingBooking.Message.Consumer.BackgroundService
         {
             var consumer = new KafkaConsumer<string, InternalEventBase>("hotel-consumer-group",
                                                                         "kafkaserver:9092",
-                                                                        "dev.emergingbooking.management.hotel-events",
+                                                                        "dev-emergingbooking-management-hotel-events",
                                                                         new HotelEventConverter())
             {
                 OnConsumingAsync = OnHotelConsumingAsync

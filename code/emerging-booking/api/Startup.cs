@@ -2,12 +2,11 @@
 using EmergingBooking.Management.Application;
 using EmergingBooking.Queries.Application;
 using EmergingBooking.Reservation.Application;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Swashbuckle.AspNetCore.Swagger;
 
 namespace EmergingBookingApi
 {
@@ -22,12 +21,12 @@ namespace EmergingBookingApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(mo => mo.EnableEndpointRouting = false);
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1",
-                             new Info
+                             new Microsoft.OpenApi.Models.OpenApiInfo
                              {
                                  Title = "EmergingBooking Api",
                                  Version = "v1",

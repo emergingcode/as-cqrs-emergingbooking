@@ -6,6 +6,17 @@ using EmergingBookingUI.Models;
 
 namespace EmergingBookingUI.ClientServices
 {
+    public class RoomReservation
+    {
+        public Guid HotelCode { get; set; }
+        public Guid RoomCode { get; set; }
+        public DateTime CheckingDate { get; set; }
+        public DateTime CheckoutDate { get; set; }
+        public string Guest { get; set; }
+        public bool BreakfastIncluded { get; set; }
+        public int NumberOfGuests { get; set; }
+    }
+
     public class BookingService
     {
         private readonly HttpClient ReservationClient;
@@ -25,16 +36,17 @@ namespace EmergingBookingUI.ClientServices
         {
             try
             {
-                var response = await ReservationClient.PostAsJsonAsync(ClientServiceEndpoints.BookingEndpoints.BookRoom, new
-                {
-                    HotelCode = hotelCode,
-                    RoomCode = roomCode,
-                    CheckingDate = checkin,
-                    CheckoutDate = checkout,
-                    Guest = guestName,
-                    NumberOfGuests = numberOfGuests,
-                    BreakfastIncluded = breakfastIncluded
-                });
+                var response = await ReservationClient.PostAsJsonAsync(
+                    ClientServiceEndpoints.BookingEndpoints.BookRoom, new RoomReservation
+                    {
+                        HotelCode = hotelCode,
+                        RoomCode = roomCode,
+                        CheckingDate = Convert.ToDateTime(checkin),
+                        CheckoutDate = Convert.ToDateTime(checkout),
+                        Guest = guestName,
+                        NumberOfGuests = numberOfGuests,
+                        BreakfastIncluded = breakfastIncluded
+                    });
 
                 return response.EnsureSuccessStatusCode();
             }
