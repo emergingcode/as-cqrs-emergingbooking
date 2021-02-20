@@ -30,10 +30,9 @@ namespace EmergingBookingApi.Controllers
         }
 
         [HttpGet]
-        [Route("reservations")]
         [ProducesResponseType(typeof(CommandResult), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-        public async Task<IActionResult> GetReservations()
+        public async Task<IActionResult> Get()
         {
             return Ok();
         }

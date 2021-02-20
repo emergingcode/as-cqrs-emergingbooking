@@ -2,18 +2,28 @@
 
 using EmergingBooking.Infrastructure.Cqrs.Events;
 using EmergingBooking.Infrastructure.KafkaProducer;
+using EmergingBooking.Management.Application.Settings;
 using EmergingBooking.Reservation.Application.Domain.Events;
+
+using Microsoft.Extensions.Options;
 
 namespace EmergingBooking.Management.Application.Handlers.Events
 {
     internal class HotelContactsUpdatedHandler : IEventHandler<HotelContactsUpdated>
     {
+        private readonly ManagementProducerSettings managementProducerSettings;
+
+        public HotelContactsUpdatedHandler(IOptions<ManagementProducerSettings> options)
+        {
+            managementProducerSettings = options.Value;
+        }
+
         public async Task HandleAsync(HotelContactsUpdated @event)
         {
             using (var producer =
                 new KafkaProducer<string, HotelContactsUpdated>(
-                    "dev-emergingbooking-management-hotel-events",
-                    "kafkaserver:9092"))
+                    this.managementProducerSettings.TopicName,
+                    this.managementProducerSettings.Server))
             {
                 await producer.ProduceMessage(@event, @event.PartitionKey());
             }
