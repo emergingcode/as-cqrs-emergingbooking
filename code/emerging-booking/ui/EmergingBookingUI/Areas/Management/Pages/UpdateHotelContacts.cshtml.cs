@@ -13,25 +13,29 @@ namespace EmergingBookingUI.Areas.Management.Pages
     public class UpdateHotelContactsModel : PageModel
 
     {
-        private readonly HotelService HotelService;
+        private readonly HotelWriteService HotelWriteService;
+        private readonly HotelReadService HotelReadService;
 
         [BindProperty]
         public CurrentContacts CurrentContacts { get; set; }
 
-        public UpdateHotelContactsModel(HotelService hotelService)
+        public UpdateHotelContactsModel(
+            HotelWriteService hotelService,
+            HotelReadService hotelReadService)
         {
-            HotelService = hotelService;
+            HotelWriteService = hotelService;
+            HotelReadService = hotelReadService;
         }
 
         public async Task OnGet(Guid hotelCode)
         {
-            CurrentContacts = await HotelService.GetCurrentContacts(hotelCode);
+            CurrentContacts = await HotelReadService.GetCurrentContacts(hotelCode);
             CurrentContacts.HotelCode = hotelCode;
         }
 
         public async Task<IActionResult> OnPost()
         {
-            await HotelService.UpdateHotelContacts(CurrentContacts);
+            await HotelWriteService.UpdateHotelContacts(CurrentContacts);
 
             return RedirectToPage("/Index", new { area = "Management" });
         }

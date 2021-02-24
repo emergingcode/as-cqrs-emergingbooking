@@ -13,8 +13,8 @@ namespace EmergingBookingUI
 {
     public class AvailableRoomsModel : PageModel
     {
-        private readonly HotelService HotelService;
-        private readonly BookingService BookingService;
+        private readonly HotelReadService HotelReadService;
+        private readonly BookingWriteService BookingWriteService;
 
         [BindProperty(SupportsGet = true)]
         public DateTime SearchChecking { get; set; }
@@ -25,18 +25,18 @@ namespace EmergingBookingUI
         public IEnumerable<AvailableRooms> AvailableRooms { get; set; }
 
         public AvailableRoomsModel(
-            HotelService hotelService,
-            BookingService bookingService)
+            HotelReadService hotelReadService,
+            BookingWriteService bookingService)
         {
-            HotelService = hotelService;
-            BookingService = bookingService;
+            HotelReadService = hotelReadService;
+            BookingWriteService = bookingService;
 
             AvailableRooms = Enumerable.Empty<AvailableRooms>();
         }
 
         public async Task OnGetAvailableRooms()
         {
-            AvailableRooms = await HotelService.GetAvailableRooms(SearchChecking, SearchCheckout);
+            AvailableRooms = await HotelReadService.GetAvailableRooms(SearchChecking, SearchCheckout);
         }
 
         public async Task OnPostBookThisRoom(
@@ -48,7 +48,7 @@ namespace EmergingBookingUI
             int numberOfGuests,
             bool breakfastIncluded)
         {
-            await BookingService.BookRoom(
+            await BookingWriteService.BookRoom(
                 hotelCode,
                 roomCode,
                 checkin,

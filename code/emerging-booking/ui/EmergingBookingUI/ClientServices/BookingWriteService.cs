@@ -2,8 +2,6 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 
-using EmergingBookingUI.Models;
-
 namespace EmergingBookingUI.ClientServices
 {
     public class RoomReservation
@@ -17,11 +15,11 @@ namespace EmergingBookingUI.ClientServices
         public int NumberOfGuests { get; set; }
     }
 
-    public class BookingService
+    public class BookingWriteService
     {
         private readonly HttpClient ReservationClient;
 
-        public BookingService(HttpClient client)
+        public BookingWriteService(HttpClient client)
         {
             ReservationClient = client;
         }
@@ -56,23 +54,23 @@ namespace EmergingBookingUI.ClientServices
             }
         }
 
-        public async Task<ReservationDetail> GetDetails(string reservationCode)
-        {
-            try
-            {
-                var relativePathEndpoint =
-                    string.Format(ClientServiceEndpoints.BookingEndpoints.ReservationDetails, reservationCode);
+        //public async Task<ReservationDetail> GetDetails(string reservationCode)
+        //{
+        //    try
+        //    {
+        //        var relativePathEndpoint =
+        //            string.Format(ClientServiceEndpoints.BookingEndpoints.ReservationDetails, reservationCode);
 
-                var response = await ReservationClient.GetAsync(relativePathEndpoint);
+        //        var response = await ReservationClient.GetAsync(relativePathEndpoint);
 
-                response.EnsureSuccessStatusCode();
+        //        response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadAsAsync<ReservationDetail>();
-            }
-            catch (HttpRequestException ex)
-            {
-                throw ex;
-            }
-        }
+        //        return await response.Content.ReadAsAsync<ReservationDetail>();
+        //    }
+        //    catch (HttpRequestException ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
     }
 }

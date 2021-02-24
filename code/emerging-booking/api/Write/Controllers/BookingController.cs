@@ -3,8 +3,6 @@ using System.Threading.Tasks;
 
 using EmergingBooking.Infrastructure.Cqrs.Commands;
 using EmergingBooking.Infrastructure.Cqrs.Queries;
-using EmergingBooking.Queries.Application.Reservation.Query;
-using EmergingBooking.Queries.Application.Reservation.ReadModel;
 using EmergingBooking.Reservation.Application.Commands;
 
 using EmergingBookingApi.InputModel.Booking;
@@ -14,8 +12,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EmergingBookingApi.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class BookingController : ControllerBase
     {
         private readonly IQueryProcessor _queryProcessor;
@@ -29,13 +27,13 @@ namespace EmergingBookingApi.Controllers
             _commandDispatcher = commandDispatcher;
         }
 
-        [HttpGet]
-        [ProducesResponseType(typeof(CommandResult), StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-        public async Task<IActionResult> Get()
-        {
-            return Ok();
-        }
+        //[HttpGet]
+        //[ProducesResponseType(typeof(CommandResult), StatusCodes.Status201Created)]
+        //[ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        //public async Task<IActionResult> Get()
+        //{
+        //    return Ok();
+        //}
 
         [HttpPost]
         [ProducesResponseType(typeof(CommandResult), StatusCodes.Status201Created)]
@@ -59,19 +57,19 @@ namespace EmergingBookingApi.Controllers
             return Ok();
         }
 
-        [HttpGet]
-        [Route("{reservationCode}/detail")]
-        [ProducesResponseType(typeof(CommandResult), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetReservationDetail(string reservationCode)
-        {
-            var retrieveReservationDetail =
-                new RetrieveReservationDetail(reservationCode);
+        //[HttpGet]
+        //[Route("{reservationCode}/detail")]
+        //[ProducesResponseType(typeof(CommandResult), StatusCodes.Status200OK)]
+        //public async Task<IActionResult> GetReservationDetail(string reservationCode)
+        //{
+        //    var retrieveReservationDetail =
+        //        new RetrieveReservationDetail(reservationCode);
 
-            var result = await _queryProcessor
-                .ExecuteQueryAsync<RetrieveReservationDetail, ReservationDetail>(retrieveReservationDetail);
+        //    var result = await _queryProcessor
+        //        .ExecuteQueryAsync<RetrieveReservationDetail, ReservationDetail>(retrieveReservationDetail);
 
-            return Ok(result);
-        }
+        //    return Ok(result);
+        //}
 
         [HttpDelete]
         [Route("{reservationCode:guid}/cancel")]

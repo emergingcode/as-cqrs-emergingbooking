@@ -10,18 +10,18 @@ namespace EmergingBookingUI.Areas.Management.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly HotelService HotelService;
+        private readonly HotelReadService HotelReadService;
 
         public IEnumerable<RegisteredHotel> Hotels { get; set; }
 
-        public IndexModel(HotelService hotelService)
+        public IndexModel(HotelReadService hotelService)
         {
-            HotelService = hotelService;
+            HotelReadService = hotelService;
         }
 
         public async Task OnGet()
         {
-            Hotels = await HotelService.GetRegisteredHotels();
+            Hotels = await HotelReadService.GetRegisteredHotels();
         }
     }
 }

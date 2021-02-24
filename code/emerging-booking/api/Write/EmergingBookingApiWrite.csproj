@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <AssemblyName>EmergingBookingApiWrite</AssemblyName>
+    <RootNamespace>EmergingBookingApiWrite</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!--<PackageReference Include="Microsoft.AspNetCore.App" />-->
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
@@ -25,9 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Business\EmergingBooking.Management.Application\EmergingBooking.Management.Application.csproj" />
-    <ProjectReference Include="..\Business\EmergingBooking.Reservation.Application\EmergingBooking.Reservation.Application.csproj" />
-    <ProjectReference Include="..\Infrastrucuture\EmergingBooking.Infrastructure.CQRS\EmergingBooking.Infrastructure.CQRS.csproj" />
-    <ProjectReference Include="..\Queries\EmergingBooking.Queries.Application\EmergingBooking.Queries.Application.csproj" />
+    <ProjectReference Include="..\..\Business\EmergingBooking.Management.Application\EmergingBooking.Management.Application.csproj" />
+    <ProjectReference Include="..\..\Business\EmergingBooking.Reservation.Application\EmergingBooking.Reservation.Application.csproj" />
+    <ProjectReference Include="..\..\Infrastrucuture\EmergingBooking.Infrastructure.CQRS\EmergingBooking.Infrastructure.CQRS.csproj" />
+    <ProjectReference Include="..\..\Queries\EmergingBooking.Queries.Application\EmergingBooking.Queries.Application.csproj" />
   </ItemGroup>
 </Project>

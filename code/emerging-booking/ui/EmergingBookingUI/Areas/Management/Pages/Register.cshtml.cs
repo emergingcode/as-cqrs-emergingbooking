@@ -10,12 +10,12 @@ namespace EmergingBookingUI.Areas.Management.Pages
 
     public class RegisterModel : PageModel
     {
-        private readonly HotelService HotelService;
+        private readonly HotelWriteService HotelService;
 
         [BindProperty]
         public HotelForRegistring NewHotel { get; set; }
 
-        public RegisterModel(HotelService hotelService)
+        public RegisterModel(HotelWriteService hotelService)
         {
             HotelService = hotelService;
         }
