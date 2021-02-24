@@ -14,7 +14,7 @@ if ($DebugMode) {
 
 docker-compose -f docker-compose.yaml up $DebugModeCommand;
 
-Write-Host "Waiting $WaitTimeForContainersUp"
+Write-Host "Waiting $WaitTimeForContainersUp before starting to create topics"
 
 Start-Sleep -s $WaitTimeForContainersUp
 
@@ -24,6 +24,8 @@ foreach ($topic in $TopicNames) {
   Write-Host "Creating topic: $topic"
   $CreateTopicCommand = "kafka-topics --create --topic " + $topic + " --partitions 3 --replication-factor 1 --if-not-exists --zookeeper  zookeeper:22181"
   docker exec -it dev-setup_kafka_1 bash -c "$CreateTopicCommand"
+  Write-Host "Waiting 3s before creating another topic"
+  Start-Sleep -s 3
   #Write-Host $CreateTopicCommand
 }
 
