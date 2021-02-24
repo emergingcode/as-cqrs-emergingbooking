@@ -30,18 +30,33 @@ namespace EmergingBookingUI
 
             services.AddRazorPages();
 
-            string apiBaseAddress = Configuration.GetSection("ApiConfiguration:BaseAddress").Value;
+            string apiWriteBaseAddress = Configuration.GetSection("ApiConfiguration:WriteBaseAddress").Value;
+            string apiReadBaseAddress = Configuration.GetSection("ApiConfiguration:ReadBaseAddress").Value;
 
-            services.AddHttpClient<HotelService>(httpConfiguration =>
+            services.AddHttpClient<HotelWriteService>(httpConfiguration =>
             {
-                httpConfiguration.BaseAddress = new Uri(apiBaseAddress);
+                httpConfiguration.BaseAddress = new Uri(apiWriteBaseAddress);
                 httpConfiguration.DefaultRequestHeaders.Add("Accept", "application/json");
                 httpConfiguration.DefaultRequestHeaders.Add("User-Agent", "EmergingBooking");
             });
 
-            services.AddHttpClient<BookingService>(httpConfiguration =>
+            services.AddHttpClient<HotelReadService>(httpConfiguration =>
             {
-                httpConfiguration.BaseAddress = new Uri(apiBaseAddress);
+                httpConfiguration.BaseAddress = new Uri(apiReadBaseAddress);
+                httpConfiguration.DefaultRequestHeaders.Add("Accept", "application/json");
+                httpConfiguration.DefaultRequestHeaders.Add("User-Agent", "EmergingBooking");
+            });
+
+            services.AddHttpClient<BookingWriteService>(httpConfiguration =>
+            {
+                httpConfiguration.BaseAddress = new Uri(apiWriteBaseAddress);
+                httpConfiguration.DefaultRequestHeaders.Add("Accept", "application/json");
+                httpConfiguration.DefaultRequestHeaders.Add("User-Agent", "EmergingBooking");
+            });
+
+            services.AddHttpClient<BookingReadService>(httpConfiguration =>
+            {
+                httpConfiguration.BaseAddress = new Uri(apiReadBaseAddress);
                 httpConfiguration.DefaultRequestHeaders.Add("Accept", "application/json");
                 httpConfiguration.DefaultRequestHeaders.Add("User-Agent", "EmergingBooking");
             });

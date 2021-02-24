@@ -8,11 +8,11 @@ using EmergingBookingUI.Models.Management;
 
 namespace EmergingBookingUI.ClientServices
 {
-    public class HotelService
+    public class HotelReadService
     {
         private readonly HttpClient HotelClient;
 
-        public HotelService(HttpClient client)
+        public HotelReadService(HttpClient client)
         {
             HotelClient = client;
         }
@@ -51,21 +51,6 @@ namespace EmergingBookingUI.ClientServices
             }
         }
 
-        internal async Task<HttpResponseMessage> RegisterRoom(Guid hotelCode, RoomForRegistring newRoom)
-        {
-            try
-            {
-                var relativePathEndpoint = string.Format(ClientServiceEndpoints.HotelEndpoints.RegisterRoom, hotelCode);
-                var response = await HotelClient.PostAsJsonAsync(relativePathEndpoint, newRoom);
-
-                return response.EnsureSuccessStatusCode();
-            }
-            catch (HttpRequestException ex)
-            {
-                throw ex;
-            }
-        }
-
         internal async Task<IEnumerable<RegisteredHotel>> GetRegisteredHotels()
         {
             try
@@ -75,20 +60,6 @@ namespace EmergingBookingUI.ClientServices
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<IReadOnlyCollection<RegisteredHotel>>();
-            }
-            catch (HttpRequestException ex)
-            {
-                throw ex;
-            }
-        }
-
-        internal async Task<HttpResponseMessage> Register(HotelForRegistring newHotel)
-        {
-            try
-            {
-                var response = await HotelClient.PostAsJsonAsync(ClientServiceEndpoints.HotelEndpoints.Register, newHotel);
-
-                return response.EnsureSuccessStatusCode();
             }
             catch (HttpRequestException ex)
             {
@@ -113,22 +84,6 @@ namespace EmergingBookingUI.ClientServices
             }
         }
 
-        internal async Task<HttpResponseMessage> UpdateHotelAddress(CurrentAddress newAddress)
-        {
-            try
-            {
-                var relativePathEndpoint = string.Format(ClientServiceEndpoints.HotelEndpoints.UpdateAddress, newAddress.HotelCode);
-
-                var response = await HotelClient.PutAsJsonAsync(relativePathEndpoint, newAddress);
-
-                return response.EnsureSuccessStatusCode();
-            }
-            catch (HttpRequestException ex)
-            {
-                throw ex;
-            }
-        }
-
         internal async Task<CurrentContacts> GetCurrentContacts(Guid hotelCode)
         {
             try
@@ -139,22 +94,6 @@ namespace EmergingBookingUI.ClientServices
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<CurrentContacts>();
-            }
-            catch (HttpRequestException ex)
-            {
-                throw ex;
-            }
-        }
-
-        internal async Task<HttpResponseMessage> UpdateHotelContacts(CurrentContacts newContacts)
-        {
-            try
-            {
-                var relativePathEndpoint = string.Format(ClientServiceEndpoints.HotelEndpoints.UpdateContacts, newContacts.HotelCode);
-
-                var response = await HotelClient.PutAsJsonAsync(relativePathEndpoint, newContacts);
-
-                return response.EnsureSuccessStatusCode();
             }
             catch (HttpRequestException ex)
             {

@@ -9,22 +9,20 @@ namespace EmergingBookingUI
 {
     public class ReservationDetailsModel : PageModel
     {
-        private readonly BookingService BookingService;
+        private readonly BookingReadService BookingReadService;
 
         public ReservationDetail Details { get; set; }
 
-        public ReservationDetailsModel(
-            HotelService hotelService,
-            BookingService bookingService)
+        public ReservationDetailsModel(BookingReadService bookingService)
         {
-            BookingService = bookingService;
+            BookingReadService = bookingService;
 
             Details = new ReservationDetail();
         }
 
         public async Task OnGet(string reservationCode)
         {
-            Details = await BookingService.GetDetails(reservationCode);
+            Details = await BookingReadService.GetDetails(reservationCode);
         }
     }
 }

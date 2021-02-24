@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace EmergingBookingApi
 {
@@ -21,7 +22,7 @@ namespace EmergingBookingApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(mo => mo.EnableEndpointRouting = false);
+            services.AddControllers();
 
             services.AddSwaggerGen(c =>
             {
@@ -39,23 +40,22 @@ namespace EmergingBookingApi
                 .RegisterManagementApplicationDependencies(Configuration)
                 .RegisterQueriesApplicationDependencies(Configuration)
                 .RegisterReservationApplicationDependencies(Configuration);
-
-            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
-                     {
-                         builder.AllowAnyOrigin()
-                                .AllowAnyMethod()
-                                .AllowAnyHeader();
-                     }));
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors("MyPolicy");
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>
@@ -63,8 +63,6 @@ namespace EmergingBookingApi
                 c.SwaggerEndpoint("./swagger/v1/swagger.json", "EmergingBooking Api V1");
                 c.RoutePrefix = string.Empty;
             });
-
-            app.UseMvc();
         }
     }
 }
