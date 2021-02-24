@@ -4,7 +4,10 @@ using EmergingBooking.Infrastructure.Storage.RavenDB;
 using EmergingBooking.Reservation.Application.Commands;
 using EmergingBooking.Reservation.Application.Domain.Events;
 using EmergingBooking.Reservation.Application.Handlers;
+using EmergingBooking.Reservation.Application.Handlers.Events;
 using EmergingBooking.Reservation.Application.Repository;
+using EmergingBooking.Reservation.Application.Settings;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,6 +19,9 @@ namespace EmergingBooking.Reservation.Application
             this IServiceCollection services,
             IConfiguration configuration)
         {
+            services.AddOptions<ReservationProducerSettings>()
+                    .Bind(configuration.GetSection(nameof(ReservationProducerSettings)));
+
             services.RegisterRavenDBStorageInfrastructureDependencies(configuration);
 
             services.AddTransient<ICommandHandler<MakeRoomReservation>, ReservationHandler>();

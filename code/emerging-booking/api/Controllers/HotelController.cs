@@ -30,10 +30,10 @@ namespace EmergingBookingApi.Controllers
             _commandDispatcher = commandDispatcher;
         }
 
-        [HttpGet]
+        [HttpGet("")]
         [ProducesResponseType(typeof(IEnumerable<HotelListItem>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetHotels()
         {
             var result = await _queryProcessor.ExecuteQueryAsync<HotelQuery, IEnumerable<HotelListItem>>(new HotelQuery());
             return Ok(result);
@@ -77,10 +77,10 @@ namespace EmergingBookingApi.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
+        [HttpPost("")]
         [ProducesResponseType(typeof(CommandResult), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-        public async Task<IActionResult> Post(Hotel hotel)
+        public async Task<IActionResult> RegisterHotel(Hotel hotel)
         {
             var result = await _commandDispatcher.ExecuteAsync(
                             new CreateHotel(hotel.Name,
@@ -101,6 +101,32 @@ namespace EmergingBookingApi.Controllers
 
             return Created("", result);
         }
+
+        //[HttpPut]
+        //[ProducesResponseType(typeof(CommandResult), StatusCodes.Status201Created)]
+        //[ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        //public async Task<IActionResult> Put(Guid hotelCode, Hotel hotel)
+        //{
+        //    var result = await _commandDispatcher.ExecuteAsync(
+        //                    new UpdateHotel(hotelCode,
+        //                                hotel.Name,
+        //                                hotel.StarsOfCategory,
+        //                                hotel.Street,
+        //                                hotel.District,
+        //                                hotel.City,
+        //                                hotel.Country,
+        //                                hotel.Zipcode,
+        //                                hotel.Email,
+        //                                hotel.Phone,
+        //                                hotel.Mobile));
+
+        //    if (result.Failure)
+        //    {
+        //        return UnprocessableEntity(result);
+        //    }
+
+        //    return Created("", result);
+        //}
 
         [HttpPut("{hotelCode:guid}/address/update")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
