@@ -12,7 +12,7 @@
 
 <br />
 
-<h2 class="text-center">Availble Hotels</h2>
+<h2 class="text-center">Available Hotels</h2>
 
 <table class="table table-hover">
     <thead class="thead-dark">
@@ -28,18 +28,18 @@
     <tbody>
         @foreach (var hotel in Model.Hotels)
         {
-<tr>
-    <th scope="row">
-        <a href="/Management/UpdateHotelAddress/@hotel.Code">Edit Address</a> |
-        <a href="/Management/UpdateHotelContacts/@hotel.Code">Edit Contacts</a> |
-        <a href="/Management/ListRooms/@hotel.Code">List Roms</a>
-    </th>
-    <td>@hotel.Name</td>
-    <td class="text-center">@hotel.StarsOfCategory</td>
-    <td>@hotel.ContactEmail</td>
-    <td>@hotel.ContactPhone</td>
-    <td class="text-center">@hotel.Rooms</td>
-</tr>
-}
+            <tr>
+                <th scope="row">
+                    <a href="/Management/UpdateHotelAddress/@hotel.Code">Edit Address</a> |
+                    <a href="/Management/UpdateHotelContacts/@hotel.Code">Edit Contacts</a> |
+                    <a href="/Management/ListRooms/@hotel.Code">List Rooms</a>
+                </th>
+                <td>@hotel.Name</td>
+                <td class="text-center">@hotel.StarsOfCategory</td>
+                <td>@hotel.ContactEmail</td>
+                <td>@hotel.ContactPhone</td>
+                <td class="text-center">@hotel.Rooms</td>
+            </tr>
+        }
     </tbody>
 </table>
