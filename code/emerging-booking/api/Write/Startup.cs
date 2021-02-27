@@ -1,6 +1,5 @@
 ﻿using EmergingBooking.Infrastructure.Cqrs;
 using EmergingBooking.Management.Application;
-using EmergingBooking.Queries.Application;
 using EmergingBooking.Reservation.Application;
 
 using Microsoft.AspNetCore.Builder;
@@ -38,7 +37,6 @@ namespace EmergingBookingApi
             services
                 .RegisterInfrastructureCqrsDependencies(Configuration)
                 .RegisterManagementApplicationDependencies(Configuration)
-                .RegisterQueriesApplicationDependencies(Configuration)
                 .RegisterReservationApplicationDependencies(Configuration);
         }
 
