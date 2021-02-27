@@ -29,6 +29,5 @@
     <ProjectReference Include="..\..\Business\EmergingBooking.Management.Application\EmergingBooking.Management.Application.csproj" />
     <ProjectReference Include="..\..\Business\EmergingBooking.Reservation.Application\EmergingBooking.Reservation.Application.csproj" />
     <ProjectReference Include="..\..\Infrastrucuture\EmergingBooking.Infrastructure.CQRS\EmergingBooking.Infrastructure.CQRS.csproj" />
-    <ProjectReference Include="..\..\Queries\EmergingBooking.Queries.Application\EmergingBooking.Queries.Application.csproj" />
   </ItemGroup>
 </Project>

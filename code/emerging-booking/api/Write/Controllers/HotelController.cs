@@ -27,53 +27,6 @@ namespace EmergingBookingApi.Controllers
             _commandDispatcher = commandDispatcher;
         }
 
-        //[HttpGet("")]
-        //[ProducesResponseType(typeof(IEnumerable<HotelListItem>), StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //public async Task<IActionResult> GetHotels()
-        //{
-        //    var result = await _queryProcessor.ExecuteQueryAsync<HotelQuery, IEnumerable<HotelListItem>>(new HotelQuery());
-        //    return Ok(result);
-        //}
-
-        //[HttpGet("{hotelCode:guid}/rooms")]
-        //[ProducesResponseType(typeof(IEnumerable<RoomListItem>), StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //public async Task<IActionResult> Get(Guid hotelCode)
-        //{
-        //    var result = await _queryProcessor.ExecuteQueryAsync<RoomQuery, IEnumerable<RoomListItem>>(new RoomQuery(hotelCode));
-        //    return Ok(result);
-        //}
-
-        //[HttpGet("{hotelCode:guid}/address/current")]
-        //[ProducesResponseType(typeof(CurrentAddress), StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //public async Task<IActionResult> GetCurrentAddress(Guid hotelCode)
-        //{
-        //    var result = await _queryProcessor
-        //        .ExecuteQueryAsync<CurrentAddressQuery, CurrentAddress>(new CurrentAddressQuery(hotelCode));
-        //    return Ok(result);
-        //}
-
-        //[HttpGet("{hotelCode:guid}/contacts/current")]
-        //[ProducesResponseType(typeof(CurrentContacts), StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //public async Task<IActionResult> GetCurrentContacts(Guid hotelCode)
-        //{
-        //    var result = await _queryProcessor
-        //        .ExecuteQueryAsync<CurrentContactsQuery, CurrentContacts>(new CurrentContactsQuery(hotelCode));
-        //    return Ok(result);
-        //}
-
-        //[HttpGet("available-rooms")]
-        //[ProducesResponseType(typeof(IEnumerable<AvailableRooms>), StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //public async Task<IActionResult> GetAvailableRooms(DateTime checking, DateTime checkout)
-        //{
-        //    var result = await _queryProcessor.ExecuteQueryAsync<AvailableRoomsQuery, IEnumerable<AvailableRooms>>(new AvailableRoomsQuery(checking, checkout));
-        //    return Ok(result);
-        //}
-
         [HttpPost("")]
         [ProducesResponseType(typeof(CommandResult), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
@@ -98,32 +51,6 @@ namespace EmergingBookingApi.Controllers
 
             return Created("", result);
         }
-
-        //[HttpPut]
-        //[ProducesResponseType(typeof(CommandResult), StatusCodes.Status201Created)]
-        //[ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-        //public async Task<IActionResult> Put(Guid hotelCode, Hotel hotel)
-        //{
-        //    var result = await _commandDispatcher.ExecuteAsync(
-        //                    new UpdateHotel(hotelCode,
-        //                                hotel.Name,
-        //                                hotel.StarsOfCategory,
-        //                                hotel.Street,
-        //                                hotel.District,
-        //                                hotel.City,
-        //                                hotel.Country,
-        //                                hotel.Zipcode,
-        //                                hotel.Email,
-        //                                hotel.Phone,
-        //                                hotel.Mobile));
-
-        //    if (result.Failure)
-        //    {
-        //        return UnprocessableEntity(result);
-        //    }
-
-        //    return Created("", result);
-        //}
 
         [HttpPut("{hotelCode:guid}/address/update")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
