@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>EmergingBooking.Infrastructure.KafkaProducer</AssemblyName>
+    <RootNamespace>EmergingBooking.Infrastructure.KafkaProducer</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

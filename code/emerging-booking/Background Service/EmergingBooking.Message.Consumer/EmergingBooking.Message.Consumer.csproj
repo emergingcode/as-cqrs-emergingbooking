@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <AssemblyName>EmergingBooking.Message.Consumer</AssemblyName>
+    <RootNamespace>EmergingBooking.Message.Consumer</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

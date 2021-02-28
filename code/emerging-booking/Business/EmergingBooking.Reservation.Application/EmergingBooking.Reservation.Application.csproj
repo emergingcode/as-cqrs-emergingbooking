@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>EmergingBooking.Reservation.Application</AssemblyName>
+    <RootNamespace>EmergingBooking.Reservation.Application</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
