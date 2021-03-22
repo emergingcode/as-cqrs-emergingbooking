@@ -36,13 +36,6 @@ namespace EmergingBookingApi
             services
                 .RegisterInfrastructureCqrsDependencies(Configuration)
                 .RegisterQueriesApplicationDependencies(Configuration);
-
-            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
-                     {
-                         builder.AllowAnyOrigin()
-                                .AllowAnyMethod()
-                                .AllowAnyHeader();
-                     }));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
