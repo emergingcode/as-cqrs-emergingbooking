@@ -9,9 +9,9 @@ namespace EmergingBooking.Queries.Application.Hotel.Query
         public DateTime Checkin { get; }
         public DateTime Checkout { get; }
 
-        public AvailableRoomsQuery(DateTime checking, DateTime checkout)
+        public AvailableRoomsQuery(DateTime checkin, DateTime checkout)
         {
-            Checkin = checking;
+            Checkin = checkin;
             Checkout = checkout;
         }
     }

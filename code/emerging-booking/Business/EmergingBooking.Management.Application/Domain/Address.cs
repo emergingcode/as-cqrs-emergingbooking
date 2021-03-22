@@ -55,7 +55,11 @@ namespace EmergingBooking.Management.Application.Domain
             PossibleBe<string> country,
             PossibleBe<int> zipCode)
         {
-            return street.HasValue && district.HasValue && city.HasValue && country.HasValue && zipCode.HasValue;
+            return street.HasValue &&
+                district.HasValue &&
+                city.HasValue &&
+                country.HasValue &&
+                zipCode.HasValue;
         }
 
         protected override IEnumerable<object> GetEqualityProperties()

@@ -1,6 +1,6 @@
 ﻿using EmergingBooking.Infrastructure.Cqrs;
 using EmergingBooking.Infrastructure.Storage.SqlServer;
-using EmergingBooking.Message.Consumer.BackgroundService;
+using EmergingBooking.Message.Consumer.BackgroundServices;
 using EmergingBooking.Message.Consumer.Repository;
 
 using Microsoft.AspNetCore.Builder;
@@ -9,8 +9,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
-using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace EmergingBooking.Message.Consumer
 {
@@ -36,7 +34,7 @@ namespace EmergingBooking.Message.Consumer
             services.AddSingleton<IHostedService, ReservationConsumer>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {

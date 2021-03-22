@@ -9,7 +9,7 @@ using EmergingBooking.Queries.Application.Hotel.ReadModel;
 
 namespace EmergingBooking.Queries.Application.Repository
 {
-    public class HotelPersistence
+    internal class HotelPersistence
     {
         private readonly ISqlServerStoreHolder _sqlServerStoreHolder;
 

@@ -51,7 +51,7 @@ namespace EmergingBooking.Management.Application.Handlers
             }
             catch (Exception ex)
             {
-                // Here you can call your app log method to register whatever exception that can happen
+                // Here you can call an app log method to register whatever exception that might happen
 
                 return CommandResult.Fail($"Error while creating the hotel {command.Name}");
             }

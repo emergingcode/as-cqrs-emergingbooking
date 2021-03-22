@@ -51,9 +51,14 @@ namespace EmergingBooking.Reservation.Application.Repository
             }
         }
 
-        public async Task CancelReservation(Guid reservationCode)
+        public async Task CancelReservation(Guid reservationIdentifier)
         {
-            throw new NotImplementedException();
+            using (var session = _ravenDocumentStore.Store.OpenAsyncSession())
+            {
+                session.Delete(reservationIdentifier);
+
+                await session.SaveChangesAsync();
+            }
         }
     }
 }

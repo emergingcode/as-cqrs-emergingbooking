@@ -1,4 +1,5 @@
 using System;
+using System.Net.Http;
 
 using EmergingBookingUI.ClientServices;
 
@@ -7,6 +8,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
+using Polly;
+using Polly.Extensions.Http;
 
 using Westwind.AspNetCore.LiveReload;
 
@@ -38,7 +42,8 @@ namespace EmergingBookingUI
                 httpConfiguration.BaseAddress = new Uri(apiWriteBaseAddress);
                 httpConfiguration.DefaultRequestHeaders.Add("Accept", "application/json");
                 httpConfiguration.DefaultRequestHeaders.Add("User-Agent", "EmergingBooking");
-            });
+            })
+            .AddPolicyHandler(GetWriteRetryPolicy());
 
             services.AddHttpClient<HotelReadService>(httpConfiguration =>
             {
@@ -52,7 +57,8 @@ namespace EmergingBookingUI
                 httpConfiguration.BaseAddress = new Uri(apiWriteBaseAddress);
                 httpConfiguration.DefaultRequestHeaders.Add("Accept", "application/json");
                 httpConfiguration.DefaultRequestHeaders.Add("User-Agent", "EmergingBooking");
-            });
+            })
+            .AddPolicyHandler(GetWriteRetryPolicy()); ;
 
             services.AddHttpClient<BookingReadService>(httpConfiguration =>
             {
@@ -60,6 +66,20 @@ namespace EmergingBookingUI
                 httpConfiguration.DefaultRequestHeaders.Add("Accept", "application/json");
                 httpConfiguration.DefaultRequestHeaders.Add("User-Agent", "EmergingBooking");
             });
+        }
+
+        private IAsyncPolicy<HttpResponseMessage> GetWriteRetryPolicy()
+        {
+            return HttpPolicyExtensions
+                    .HandleTransientHttpError()
+                    .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+        }
+
+        private IAsyncPolicy<HttpResponseMessage> GetReadRetryPolicy()
+        {
+            return HttpPolicyExtensions
+                    .HandleTransientHttpError()
+                    .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

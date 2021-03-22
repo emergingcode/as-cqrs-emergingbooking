@@ -8,9 +8,11 @@ using EmergingBooking.Message.Consumer.Extensions;
 using EmergingBooking.Message.Consumer.Models.Events;
 using EmergingBooking.Message.Consumer.Repository;
 
-namespace EmergingBooking.Message.Consumer.BackgroundService
+using Microsoft.Extensions.Hosting;
+
+namespace EmergingBooking.Message.Consumer.BackgroundServices
 {
-    public class HotelConsumer : HostedService
+    public class HotelConsumer : BackgroundService
     {
         private readonly HotelPersistenceSynchronizer _hotelPersistenceSynchronizer;
 

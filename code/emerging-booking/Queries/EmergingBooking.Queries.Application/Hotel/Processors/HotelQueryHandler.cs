@@ -8,7 +8,7 @@ using EmergingBooking.Queries.Application.Repository;
 
 namespace EmergingBooking.Queries.Application.Hotel.Processors
 {
-    public class HotelQueryHandler :
+    internal class HotelQueryHandler :
         IQueryHandler<HotelQuery, IEnumerable<HotelListItem>>,
         IQueryHandler<RoomQuery, IEnumerable<RoomListItem>>,
         IQueryHandler<AvailableRoomsQuery, IEnumerable<AvailableRooms>>,

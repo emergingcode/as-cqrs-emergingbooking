@@ -7,6 +7,8 @@ using EmergingBooking.Reservation.Application.Commands;
 using EmergingBooking.Reservation.Application.Domain;
 using EmergingBooking.Reservation.Application.Repository;
 
+using MonoidSharp;
+
 namespace EmergingBooking.Reservation.Application.Handlers
 {
     internal class ReservationHandler :
@@ -31,7 +33,7 @@ namespace EmergingBooking.Reservation.Application.Handlers
                 var bookingPeriod = Period.Create(command.CheckingDate, command.CheckoutDate);
 
                 bool roomIsAvailable =
-                    await _reservationPersistence.CheckAvailabilityRoomAsync(bookingPeriod, command.RoomCode);
+                    await _reservationPersistence.CheckAvailabilityRoomAsync(bookingPeriod.Value, command.RoomCode);
 
                 if (!roomIsAvailable)
                     return CommandResult.Fail($"This room was booked for this same period: {bookingPeriod}");
@@ -40,22 +42,29 @@ namespace EmergingBooking.Reservation.Application.Handlers
                     await _hotelPersistence.RetrieveHotelAndRoomByCodeAsync(command.HotelCode,
                                                                             command.RoomCode);
 
-                var bookedHotel = new BookedHotel(hotelAndRoomDetail.Name,
-                                                  hotelAndRoomDetail.Address.ToString(),
-                                                  hotelAndRoomDetail.StarsOfCategory);
-
                 var selectedRoom = hotelAndRoomDetail.Rooms
                                                      .Where(x => x.Code == command.RoomCode)
                                                      .FirstOrDefault();
 
-                var bookedRoom = new BookedRoom(selectedRoom.Code,
+                var bookedHotel = BookedHotel.Create(hotelAndRoomDetail.Name,
+                                                  hotelAndRoomDetail.Address.ToString(),
+                                                  hotelAndRoomDetail.StarsOfCategory);
+
+                var bookedRoom = BookedRoom.Create(selectedRoom.Code,
                                                 selectedRoom.Description,
                                                 selectedRoom.Capacity,
                                                 selectedRoom.PricePerNight);
 
-                var reservation = new ReservationDetail(bookedHotel,
-                                                        bookedRoom,
-                                                        bookingPeriod,
+                var domainCombinedValues = Outcome.Combine(bookedHotel, bookedRoom);
+
+                if (domainCombinedValues.Failure)
+                {
+                    return CommandResult.Fail(domainCombinedValues.ErrorMessages);
+                }
+
+                var reservation = new ReservationDetail(bookedHotel.Value,
+                                                        bookedRoom.Value,
+                                                        bookingPeriod.Value,
                                                         command.Guest,
                                                         command.NumberOfGuests,
                                                         command.BreakfastIncluded);

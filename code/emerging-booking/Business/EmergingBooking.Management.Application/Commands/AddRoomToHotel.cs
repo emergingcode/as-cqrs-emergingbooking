@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+
 using EmergingBooking.Infrastructure.Cqrs.Commands;
 
 namespace EmergingBooking.Management.Application.Commands
@@ -13,7 +13,7 @@ namespace EmergingBooking.Management.Application.Commands
         public int Capacity { get; }
         public int AvailableQuantity { get; }
         public decimal PricePerNight { get; }
-        public IList<string> Amenities { get; set; }
+        public IList<string> Amenities { get; }
 
         public AddRoomToHotel(Guid hotelCode, string name, string description, int capacity,
             int availableQuantity, decimal pricePerNight, IList<string> amenities)

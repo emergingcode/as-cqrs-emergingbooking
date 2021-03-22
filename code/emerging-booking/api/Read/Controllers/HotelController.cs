@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using EmergingBooking.Infrastructure.Cqrs.Commands;
 using EmergingBooking.Infrastructure.Cqrs.Queries;
 using EmergingBooking.Queries.Application.Hotel.Query;
 using EmergingBooking.Queries.Application.Hotel.ReadModel;
@@ -17,14 +16,11 @@ namespace EmergingBookingApi.Controllers
     public class HotelController : ControllerBase
     {
         private readonly IQueryProcessor _queryProcessor;
-        private readonly ICommandDispatcher _commandDispatcher;
 
         public HotelController(
-            ICommandDispatcher commandDispatcher,
             IQueryProcessor queryProcessor)
         {
             _queryProcessor = queryProcessor;
-            _commandDispatcher = commandDispatcher;
         }
 
         [HttpGet("")]

@@ -4,26 +4,6 @@ namespace EmergingBooking.Reservation.Application.Domain.Events
 {
     internal class ReservationCreated : ReservationEventBaseV1
     {
-        private Period BookingPeriod { get; }
-        private BookedHotel BookedHotel { get; }
-        private BookedRoom BookedRoom { get; }
-
-        public string Code { get; }
-        public string BookedBy { get; }
-        public int NumberOfGuests { get; }
-        public int NumberOfNights { get; }
-        public decimal PaidPrice { get; }
-        public bool BreakfastIncluded { get; }
-        public string HotelName => BookedHotel.Name;
-        public string HotelAddress => BookedHotel.Address;
-        public int HotelStarsOfCategory => BookedHotel.StarsOfCategory;
-        public DateTime Checkin => BookingPeriod.Checkin;
-        public DateTime Checkout => BookingPeriod.Checkout;
-        public Guid RoomCode => BookedRoom.Code;
-        public string RoomDescription => BookedRoom.Description;
-        public int RoomCapacity => BookedRoom.Capacity;
-        public decimal PricePerNight => BookedRoom.PricePerNight;
-
         public ReservationCreated(
             string code,
             string bookedBy,
@@ -45,5 +25,25 @@ namespace EmergingBooking.Reservation.Application.Domain.Events
             BookedHotel = bookedHotel;
             BookedRoom = bookedRoom;
         }
+
+        private Period BookingPeriod { get; }
+        private BookedHotel BookedHotel { get; }
+        private BookedRoom BookedRoom { get; }
+
+        public string Code { get; }
+        public string BookedBy { get; }
+        public int NumberOfGuests { get; }
+        public int NumberOfNights { get; }
+        public decimal PaidPrice { get; }
+        public bool BreakfastIncluded { get; }
+        public string HotelName => BookedHotel.Name;
+        public string HotelAddress => BookedHotel.Address;
+        public int HotelStarsOfCategory => BookedHotel.StarsOfCategory;
+        public DateTime Checkin => BookingPeriod.Checkin;
+        public DateTime Checkout => BookingPeriod.Checkout;
+        public Guid RoomCode => BookedRoom.Code;
+        public string RoomDescription => BookedRoom.Description;
+        public int RoomCapacity => BookedRoom.Capacity;
+        public decimal PricePerNight => BookedRoom.PricePerNight;
     }
 }

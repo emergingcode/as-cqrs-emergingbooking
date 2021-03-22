@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using EmergingBooking.Infrastructure.Cqrs.Commands;
 
 namespace EmergingBooking.Infrastructure.Cqrs.Queries
 {

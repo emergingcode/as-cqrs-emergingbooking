@@ -15,14 +15,11 @@ namespace EmergingBookingApi.Controllers
     public class BookingController : ControllerBase
     {
         private readonly IQueryProcessor _queryProcessor;
-        private readonly ICommandDispatcher _commandDispatcher;
 
         public BookingController(
-            ICommandDispatcher commandDispatcher,
             IQueryProcessor queryProcessor)
         {
             _queryProcessor = queryProcessor;
-            _commandDispatcher = commandDispatcher;
         }
 
         [HttpGet]

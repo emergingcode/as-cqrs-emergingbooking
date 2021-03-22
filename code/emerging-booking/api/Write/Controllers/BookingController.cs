@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 
 using EmergingBooking.Infrastructure.Cqrs.Commands;
-using EmergingBooking.Infrastructure.Cqrs.Queries;
 using EmergingBooking.Reservation.Application.Commands;
 
 using EmergingBookingApi.InputModel.Booking;
@@ -16,14 +15,11 @@ namespace EmergingBookingApi.Controllers
     [Route("api/[controller]")]
     public class BookingController : ControllerBase
     {
-        private readonly IQueryProcessor _queryProcessor;
         private readonly ICommandDispatcher _commandDispatcher;
 
         public BookingController(
-            ICommandDispatcher commandDispatcher,
-            IQueryProcessor queryProcessor)
+            ICommandDispatcher commandDispatcher)
         {
-            _queryProcessor = queryProcessor;
             _commandDispatcher = commandDispatcher;
         }
 
