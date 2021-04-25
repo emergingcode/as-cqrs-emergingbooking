@@ -53,24 +53,5 @@ namespace EmergingBookingUI.ClientServices
                 throw ex;
             }
         }
-
-        //public async Task<ReservationDetail> GetDetails(string reservationCode)
-        //{
-        //    try
-        //    {
-        //        var relativePathEndpoint =
-        //            string.Format(ClientServiceEndpoints.BookingEndpoints.ReservationDetails, reservationCode);
-
-        //        var response = await ReservationClient.GetAsync(relativePathEndpoint);
-
-        //        response.EnsureSuccessStatusCode();
-
-        //        return await response.Content.ReadAsAsync<ReservationDetail>();
-        //    }
-        //    catch (HttpRequestException ex)
-        //    {
-        //        throw ex;
-        //    }
-        //}
     }
 }
