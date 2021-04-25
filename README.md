@@ -24,6 +24,7 @@ Desenvolvedores Mid e Senior, Arquitetos de Software, Tech Leads, Team Leads, Te
 
 - ASP.NET 5.0
 - Csharp 8.0
+- [MonoidSharpDotNet](https://github.com/jr-araujo/MonoidSharpDotNet)
 - Background Service
 - Apache Kafka
 - SQL Server
