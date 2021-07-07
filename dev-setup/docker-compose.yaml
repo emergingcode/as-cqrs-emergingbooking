@@ -16,13 +16,13 @@ services:
       RAVEN_Security_UnsecuredAccessAllowed: "PrivateNetwork"
 
   mssqldata:
-    image: microsoft/mssql-server-linux:latest
+    image: mcr.microsoft.com/mssql/server
     networks: 
       - sqlservernet
     entrypoint: /bin/bash
 
   sqlserver:
-    image: microsoft/mssql-server-linux:latest
+    image: mcr.microsoft.com/mssql/server
     container_name: ec-aswmoderna-mssql
     hostname: mssqls-server
     networks: 
