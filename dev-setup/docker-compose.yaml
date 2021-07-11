@@ -1,23 +1,23 @@
-version: "3.4"
+version: '3.4'
 
 services:
   ravendb:
     image: ravendb/ravendb
     container_name: ec-ravendb
     hostname: ravendb-server
-    networks: 
+    networks:
       - ravendbnet
     ports:
-      - "8080:8080"
-      - "38888:38888"
+      - '8080:8080'
+      - '38888:38888'
     environment:
-      RAVEN_Setup_Mode: "None"
-      RAVEN_License_Eula_Accepted: "true"
-      RAVEN_Security_UnsecuredAccessAllowed: "PrivateNetwork"
+      RAVEN_Setup_Mode: 'None'
+      RAVEN_License_Eula_Accepted: 'true'
+      RAVEN_Security_UnsecuredAccessAllowed: 'PrivateNetwork'
 
   mssqldata:
     image: mcr.microsoft.com/mssql/server
-    networks: 
+    networks:
       - sqlservernet
     entrypoint: /bin/bash
 
@@ -25,51 +25,50 @@ services:
     image: mcr.microsoft.com/mssql/server
     container_name: ec-aswmoderna-mssql
     hostname: mssqls-server
-    networks: 
+    networks:
       - sqlservernet
     ports:
       - 1433:1433
     volumes:
       - /var/opt/mssql
       # we copy our scripts onto the container
-      - ./:/usr/src/app 
+      - ./:/usr/src/app
     # bash will be executed from that path, our scripts folder
-    working_dir: /usr/src/app 
+    working_dir: /usr/src/app
     # run the entrypoint.sh that will import the data AND sqlserver
-    command: bash -c ' chmod +x ./entrypoint.sh; ./entrypoint.sh & /opt/mssql/bin/sqlservr;'
+    command: bash -c 'chmod -R a+X ./entrypoint.sh; ./entrypoint.sh & /opt/mssql/bin/sqlservr;'
     environment:
-      ACCEPT_EULA: Y
+      ACCEPT_EULA: 'Y'
       SA_PASSWORD: EmergingB00king@2019
       DATABASE_NAME: EmergingBooking
     # don't use this if you don't want to persit data between docker up and down
     volumes_from:
       - mssqldata
 
-  zookeeper:
-    image: confluentinc/cp-zookeeper:latest
+  zoo1:
+    image: zookeeper:3.4.9
+    hostname: zoo1
     ports:
-      - 22181:22181
-    networks: 
-      - kafkanet
+      - '2181:2181'
     environment:
-      ZOOKEEPER_CLIENT_PORT: 22181
-      ZOOKEEPER_TICK_TIME: 2000
+      ZOO_MY_ID: 1
+      ZOO_PORT: 2181
 
   kafka:
-    image: confluentinc/cp-kafka:latest
-    networks: 
-      - kafkanet
-    depends_on:
-      - zookeeper
+    image: confluentinc/cp-kafka:5.5.1
+    hostname: kafka
     ports:
-      - 9092:9092
+      - '9092:9092'
+      - '9999:9999'
     environment:
       KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:22181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1      
+      KAFKA_ZOOKEEPER_CONNECT: 'zoo1:2181'
+      KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://kafka:19092,LISTENER_DOCKER_EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_DOCKER_INTERNAL:PLAINTEXT,LISTENER_DOCKER_EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    depends_on:
+      - zoo1
 
 networks:
   ravendbnet:
