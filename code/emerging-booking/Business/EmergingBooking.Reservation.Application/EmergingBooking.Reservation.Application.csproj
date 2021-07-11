@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="MonoidSharp" Version="0.0.2-alpha" />
     <PackageReference Include="Confluent.Kafka" Version="1.5.3" />
-    <PackageReference Include="RavenDB.Client" Version="4.1.5" />
+    <PackageReference Include="RavenDB.Client" Version="5.2.1" />
   </ItemGroup>
 
   <ItemGroup>

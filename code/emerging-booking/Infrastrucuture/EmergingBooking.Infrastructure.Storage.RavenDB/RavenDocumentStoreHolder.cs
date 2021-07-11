@@ -1,56 +1,22 @@
 ﻿using System;
+
 using Microsoft.Extensions.Options;
+
 using Raven.Client.Documents;
-using Raven.Client.ServerWide;
-using Raven.Client.ServerWide.Operations;
 
 namespace EmergingBooking.Infrastructure.Storage.RavenDB
 {
     internal class RavenDocumentStoreHolder : IRavenDocumentStoreHolder
     {
-        private readonly RavenDBSettings _ravenSettings;
+        private readonly Lazy<IDocumentStore> _documentStore;
 
-        public RavenDocumentStoreHolder(IOptions<RavenDBSettings> optionsDatabaseSettings)
+        public RavenDocumentStoreHolder(
+            IOptions<RavenDBSettings> optionsDatabaseSettings,
+            Lazy<IDocumentStore> documentStore)
         {
-            _ravenSettings = optionsDatabaseSettings.Value;
+            _documentStore = documentStore;
         }
 
-        private Lazy<IDocumentStore> LazyStore => 
-            new Lazy<IDocumentStore>(() =>
-            {
-                var store = new DocumentStore
-                {
-                    Urls = new[] {_ravenSettings.Server},
-                    Database = _ravenSettings.DatabaseName,
-                    Conventions =
-                    {
-                        CustomizeJsonSerializer = serializer =>
-                        {
-                            serializer.TypeNameHandling =
-                                Newtonsoft.Json.TypeNameHandling.Auto;
-                        }
-                    }
-                };
-
-
-                store.Initialize();
-
-                // Try to retrieve a record from this database, inside of internal system databases
-                var databaseRecord =
-                    store.Maintenance.Server.Send(new GetDatabaseRecordOperation(store.Database));
-
-                if (databaseRecord != null)
-                    return store;
-
-                var createDatabaseOperation =
-                    new CreateDatabaseOperation(new DatabaseRecord(store.Database));
-
-                store.Maintenance.Server.Send(createDatabaseOperation);
-
-                return store;
-            });
-        
-
-        public IDocumentStore Store => LazyStore.Value;
+        public IDocumentStore Store => _documentStore.Value;
     }
 }
