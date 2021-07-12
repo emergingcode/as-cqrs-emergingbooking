@@ -42,3 +42,10 @@ Ao baixar o repositório do projeto, atente-se onde você vai clonar o projeto. 
 
 #### Branches
 Este repositório só possui uma única branch, chamada: **main**, assim que você baixar o repositório, você terá a versão FINAL do projeto. Para reconstruir esse projeto, você precisa acompanhar as vídeo aulas disponibilizadas na plataforma da Hotmart em sua área de membros, e também ficar atento(a) as descrições que existem em alguns vídeos e no grupo do telegram.
+
+#### Automação do ambiente de desenvolvimento
+Dentro da pasta [dev-setup](https://github.com/emergingcode/arquitetura-moderna-sw-cqrs-emergingbooking/tree/main/dev-setup) você vai encontrar todos os scripts de automação para criar os containers que serão usados no seu ambiente de desenvolvimento. Mas para esse script rodar 100%, você precisa executar um app linux [Dos2Unix](http://dos2unix.sourceforge.net/) para o arquivo [Entrypoint.sh](https://github.com/emergingcode/arquitetura-moderna-sw-cqrs-emergingbooking/blob/main/dev-setup/entrypoint.sh), que é responsável por criar a base de dados e as tabelas dentro da instância do SQL Server.
+
+Esse procedimento vai converter os caracteres de final de linha do MODO DOS (Windows) para o MODO UNIX (Linux). Esse passo é necessário porque quando o script [run.ps1](https://github.com/emergingcode/arquitetura-moderna-sw-cqrs-emergingbooking/blob/main/dev-setup/run.ps1) é executado, ele chama o docker-compose.yaml e, no passo que monta o SQL Server, o script **entrypoint.sh** é copiado para dentro do container LINUX do SQL Server e é então aplicado contra o SQL Server Linux.
+
+Sem esse passo, a automação não vai instanciar o container do SQL Server conforme esperado.
