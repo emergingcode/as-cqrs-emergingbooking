@@ -34,3 +34,11 @@ Desenvolvedores Mid e Senior, Arquitetos de Software, Tech Leads, Team Leads, Te
 - Docker Compose
 - Powershell
 - Shell Script
+
+# Como usar o repositório
+
+#### Clonando o repositório
+Ao baixar o repositório do projeto, atente-se onde você vai clonar o projeto. Dependendo do nível de profundidade de pastas que você use no momento de clonar o projeto, você pode cair no problema de limitação do número de caracteres que um PATH (caminho de pastas) pode ter no windows. Aconselhamos sempre clonar o projeto em uma pasta mais próxima do driver que você estiver usando (C:, D:, etc.)
+
+#### Branches
+Este repositório só possui uma única branch, chamada: **main**, assim que você baixar o repositório, você terá a versão FINAL do projeto. Para reconstruir esse projeto, você precisa acompanhar as vídeo aulas disponibilizadas na plataforma da Hotmart em sua área de membros, e também ficar atento(a) as descrições que existem em alguns vídeos e no grupo do telegram.
