@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmergingBooking.Queries.App
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{D6668DAD-AB0B-4317-BE84-EFBA754B2E6B}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\docker-compose.yaml = ..\..\docker-compose.yaml
+		..\..\dev-setup\docker-compose.yaml = ..\..\dev-setup\docker-compose.yaml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmergingBooking.Management.Application", "Business\EmergingBooking.Management.Application\EmergingBooking.Management.Application.csproj", "{11CFF3F7-B5AC-40A2-AE73-3E300867CCCB}"

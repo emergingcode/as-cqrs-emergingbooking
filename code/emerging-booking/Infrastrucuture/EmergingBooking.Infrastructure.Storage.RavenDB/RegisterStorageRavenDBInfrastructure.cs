@@ -21,44 +21,44 @@ namespace EmergingBooking.Infrastructure.Storage.RavenDB
                     .Bind(configuration.GetSection(nameof(RavenDBSettings)));
 
             services.AddSingleton<Lazy<IDocumentStore>, Lazy<IDocumentStore>>(provider =>
-            new Lazy<IDocumentStore>(
-                () =>
-                {
-                    var _ravenSettings = provider.GetRequiredService<IOptions<RavenDBSettings>>().Value;
-
-                    var store = new DocumentStore
+                new Lazy<IDocumentStore>(
+                    () =>
                     {
-                        Urls = new[] { _ravenSettings.Server },
-                        Database = _ravenSettings.DatabaseName,
-                        Conventions =
+                        var _ravenSettings = provider.GetRequiredService<IOptions<RavenDBSettings>>().Value;
+
+                        var store = new DocumentStore
                         {
-                            Serialization = new NewtonsoftJsonSerializationConventions
+                            Urls = new[] { _ravenSettings.Server },
+                            Database = _ravenSettings.DatabaseName,
+                            Conventions =
                             {
-                                CustomizeJsonSerializer = serializer =>
+                                Serialization = new NewtonsoftJsonSerializationConventions
                                 {
-                                    serializer.TypeNameHandling =
-                                        Newtonsoft.Json.TypeNameHandling.Auto;
+                                    CustomizeJsonSerializer = serializer =>
+                                    {
+                                        serializer.TypeNameHandling =
+                                            Newtonsoft.Json.TypeNameHandling.Auto;
+                                    }
                                 }
                             }
-                        }
-                    };
+                        };
 
-                    store.Initialize();
+                        store.Initialize();
 
-                    // Try to retrieve a record from this database, inside of internal system databases
-                    var databaseRecord =
-                        store.Maintenance.Server.Send(new GetDatabaseRecordOperation(store.Database));
+                        // Try to retrieve a record from this database, inside of internal system databases
+                        var databaseRecord =
+                            store.Maintenance.Server.Send(new GetDatabaseRecordOperation(store.Database));
 
-                    if (databaseRecord != null)
+                        if (databaseRecord != null)
+                            return store;
+
+                        var createDatabaseOperation =
+                            new CreateDatabaseOperation(new DatabaseRecord(store.Database));
+
+                        store.Maintenance.Server.Send(createDatabaseOperation);
+
                         return store;
-
-                    var createDatabaseOperation =
-                        new CreateDatabaseOperation(new DatabaseRecord(store.Database));
-
-                    store.Maintenance.Server.Send(createDatabaseOperation);
-
-                    return store;
-                }));
+                    }));
 
             services.AddSingleton<IRavenDocumentStoreHolder, RavenDocumentStoreHolder>();
 

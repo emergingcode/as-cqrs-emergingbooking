@@ -1,23 +1,17 @@
 ﻿using System;
 using System.Data;
-using System.Data.SqlClient;
-using Microsoft.Extensions.Options;
 
 namespace EmergingBooking.Infrastructure.Storage.SqlServer
 {
     internal class SqlServerStoreHolder : ISqlServerStoreHolder
     {
-        private readonly SqlServerSettings _sqlServerSettings;
+        private readonly Lazy<IDbConnection> dbConnection;
 
-        public SqlServerStoreHolder(IOptions<SqlServerSettings> optionsDatabaseSettings)
+        public SqlServerStoreHolder(Lazy<IDbConnection> dbConnection)
         {
-            _sqlServerSettings = optionsDatabaseSettings.Value;
+            this.dbConnection = dbConnection;
         }
 
-        private Lazy<IDbConnection> LazyStore => 
-            new Lazy<IDbConnection>(() => new SqlConnection(_sqlServerSettings.ConnectionString));
-        
-
-        public IDbConnection DbConnection => LazyStore.Value;
+        public IDbConnection DbConnection => dbConnection.Value;
     }
 }
