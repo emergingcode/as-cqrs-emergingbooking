@@ -9,21 +9,17 @@ using EmergingBooking.Queries.Application.Hotel.ReadModel;
 
 namespace EmergingBooking.Queries.Application.Repository
 {
-    internal class HotelPersistence
+    internal class HotelPersistence : RepositoryBase
     {
-        private readonly ISqlServerStoreHolder _sqlServerStoreHolder;
-
         public HotelPersistence(ISqlServerStoreHolder sqlServerStoreHolder)
+            : base(sqlServerStoreHolder)
         {
-            _sqlServerStoreHolder = sqlServerStoreHolder;
         }
 
         public async Task<IEnumerable<HotelListItem>> RetrieveHotels()
         {
-            using (var connection = _sqlServerStoreHolder.DbConnection)
+            return await HandleConnection(async (connection) =>
             {
-                connection.Open();
-
                 return await connection.QueryAsync<HotelListItem>(@"
                                                                 SELECT H.[Code]
                                                                         ,H.[Name]
@@ -37,35 +33,31 @@ namespace EmergingBooking.Queries.Application.Repository
                                                                         ,[ContactMobile]
                                                                         ,[ContactPhone]
                                                                         ,[ContactEmail]
-	                                                                    , (SELECT COUNT(1) FROM [EmergingBooking].[dbo].[Rooms] AS R WHERE r.HotelCode = H.Code) AS Rooms
+                                                                     , (SELECT COUNT(1) FROM [EmergingBooking].[dbo].[Rooms] AS R WHERE r.HotelCode = H.Code) AS Rooms
                                                                     FROM [EmergingBooking].[dbo].[Hotels] AS H
                                                                 ");
-            }
+            });
         }
 
         internal async Task<CurrentContacts> RetrieveCurrentContacts(Guid hotelCode)
         {
-            using (var connection = _sqlServerStoreHolder.DbConnection)
+            return await HandleConnection(async (connection) =>
             {
-                connection.Open();
-
                 return await connection
                     .QueryFirstAsync<CurrentContacts>(@"
-                                                    SELECT ContactEmail as Email,
-                                                           ContactPhone as Phone,
-                                                           ContactMobile as Mobile
-                                                    FROM Hotels
-                                                    Where Code = @hotelCode",
+                                                SELECT ContactEmail as Email,
+                                                        ContactPhone as Phone,
+                                                        ContactMobile as Mobile
+                                                FROM Hotels
+                                                Where Code = @hotelCode",
                         new { hotelCode });
-            }
+            });
         }
 
         internal async Task<CurrentAddress> RetrieveCurrentAddress(Guid hotelCode)
         {
-            using (var connection = _sqlServerStoreHolder.DbConnection)
+            return await HandleConnection(async (connection) =>
             {
-                connection.Open();
-
                 return await connection
                     .QueryFirstAsync<CurrentAddress>(@"
                                                     SELECT AddressStreet as Street,
@@ -76,24 +68,21 @@ namespace EmergingBooking.Queries.Application.Repository
                                                     FROM Hotels
                                                     Where Code = @hotelCode",
                         new { hotelCode });
-            }
+            });
         }
 
         public async Task<IEnumerable<RoomListItem>> RetrieveRooms(Guid hotelCode)
         {
-            using (var connection = _sqlServerStoreHolder.DbConnection)
+            return await HandleConnection(async (connection) =>
             {
-                connection.Open();
-
                 return await connection
                     .QueryAsync<RoomListItem>("SELECT * FROM Rooms Where HotelCode = @hotelCode",
                     new { hotelCode });
-            }
+            });
         }
 
         public async Task<IEnumerable<AvailableRooms>> RetrieveAvailableRooms(DateTime checking, DateTime checkout)
         {
-            //CAUTION: Only and only so for didatical sense the SQL aggregate functions were used to give expected results.
             var sql =
                         @"
                         SELECT
@@ -131,10 +120,9 @@ namespace EmergingBooking.Queries.Application.Repository
 	                        , R.Code
 	                        , R.Name
                         ";
-            using (var connection = _sqlServerStoreHolder.DbConnection)
-            {
-                connection.Open();
 
+            return await HandleConnection(async (connection) =>
+            {
                 return await connection
                     .QueryAsync<AvailableRooms>(sql,
                     new
@@ -142,7 +130,7 @@ namespace EmergingBooking.Queries.Application.Repository
                         DateCheckin = checking,
                         DateCheckout = checkout
                     });
-            }
+            });
         }
     }
 }

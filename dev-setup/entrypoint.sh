@@ -1,5 +1,5 @@
 #!/bin/bash
-wait_time=15s
+wait_time=30s
 password=EmergingB00king@2019
 
 # wait for SQL Server to come up

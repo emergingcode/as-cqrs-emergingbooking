@@ -9,81 +9,43 @@ using EmergingBooking.Message.Consumer.Models;
 
 namespace EmergingBooking.Message.Consumer.Repository
 {
-    public class HotelPersistenceSynchronizer
+    internal class HotelPersistenceSynchronizer : RepositoryBase
     {
-        private readonly ISqlServerStoreHolder _sqlServerStoreHolder;
-
         public HotelPersistenceSynchronizer(ISqlServerStoreHolder sqlServerStoreHolder)
+            : base(sqlServerStoreHolder)
         {
-            _sqlServerStoreHolder = sqlServerStoreHolder;
         }
 
         public async Task SynchronizeHotelData(HotelData hotelData)
         {
-            try
+            await HandleConnection(async (connection) =>
             {
-                using (var connection = _sqlServerStoreHolder.DbConnection)
-                {
-                    connection.Open();
-
-                    await connection.InsertAsync<Guid, HotelData>(hotelData);
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+                return await connection.InsertAsync<Guid, HotelData>(hotelData);
+            });
         }
 
         public async Task SynchronizeHotelAddressData(HotelAddressData hotelAddressData)
         {
-            try
+            await HandleConnection(async (connection) =>
             {
-                using (var connection = _sqlServerStoreHolder.DbConnection)
-                {
-                    connection.Open();
-
-                    await connection.UpdateAsync(hotelAddressData);
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+                return await connection.UpdateAsync(hotelAddressData);
+            });
         }
 
         public async Task SynchronizeHotelContactsData(HotelContactsData hotelContactsData)
         {
-            try
+            await HandleConnection(async (connection) =>
             {
-                using (var connection = _sqlServerStoreHolder.DbConnection)
-                {
-                    connection.Open();
-
-                    await connection.UpdateAsync(hotelContactsData);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+                return await connection.UpdateAsync(hotelContactsData);
+            });
         }
 
         public async Task SynchronizeRoomData(RoomData roomData)
         {
-            try
+            await HandleConnection(async (connection) =>
             {
-                using (var connection = _sqlServerStoreHolder.DbConnection)
-                {
-                    connection.Open();
-
-                    await connection.InsertAsync<Guid, RoomData>(roomData);
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+                return await connection.InsertAsync<Guid, RoomData>(roomData);
+            });
         }
     }
 }

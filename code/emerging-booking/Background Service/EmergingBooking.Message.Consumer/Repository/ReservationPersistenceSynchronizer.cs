@@ -8,30 +8,19 @@ using EmergingBooking.Message.Consumer.Models;
 
 namespace EmergingBooking.Message.Consumer.Repository
 {
-    public class ReservationPersistenceSynchronizer
+    internal class ReservationPersistenceSynchronizer : RepositoryBase
     {
-        private readonly ISqlServerStoreHolder _sqlServerStoreHolder;
-
         public ReservationPersistenceSynchronizer(ISqlServerStoreHolder sqlServerStoreHolder)
+            : base(sqlServerStoreHolder)
         {
-            _sqlServerStoreHolder = sqlServerStoreHolder;
         }
 
         public async Task SynchronizeReservationData(ReservationData reservationData)
         {
-            try
+            await HandleConnection(async (connection) =>
             {
-                using (var connection = _sqlServerStoreHolder.DbConnection)
-                {
-                    connection.Open();
-
-                    await connection.InsertAsync<Guid, ReservationData>(reservationData);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+                return await connection.InsertAsync<Guid, ReservationData>(reservationData);
+            });
         }
     }
 }

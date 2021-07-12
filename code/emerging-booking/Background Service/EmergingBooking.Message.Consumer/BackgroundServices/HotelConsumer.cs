@@ -14,7 +14,7 @@ using Microsoft.Extensions.Options;
 
 namespace EmergingBooking.Message.Consumer.BackgroundServices
 {
-    public class HotelConsumer : BackgroundService
+    internal class HotelConsumer : BackgroundService
     {
         private readonly HotelConsumerSettings _hotelConsumerSettings;
         private readonly HotelPersistenceSynchronizer _hotelPersistenceSynchronizer;

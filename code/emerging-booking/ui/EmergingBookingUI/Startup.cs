@@ -50,7 +50,7 @@ namespace EmergingBookingUI
                 httpConfiguration.BaseAddress = new Uri(apiReadBaseAddress);
                 httpConfiguration.DefaultRequestHeaders.Add("Accept", "application/json");
                 httpConfiguration.DefaultRequestHeaders.Add("User-Agent", "EmergingBooking");
-            }).AddPolicyHandler(GetReadRetryPolicy());
+            });//.AddPolicyHandler(GetReadRetryPolicy());
 
             services.AddHttpClient<BookingWriteService>(httpConfiguration =>
             {
