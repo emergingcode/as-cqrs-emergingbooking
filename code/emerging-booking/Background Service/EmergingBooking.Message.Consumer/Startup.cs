@@ -2,6 +2,7 @@
 using EmergingBooking.Infrastructure.Storage.SqlServer;
 using EmergingBooking.Message.Consumer.BackgroundServices;
 using EmergingBooking.Message.Consumer.Repository;
+using EmergingBooking.Message.Consumer.Settings;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,6 +24,12 @@ namespace EmergingBooking.Message.Consumer
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions<HotelConsumerSettings>()
+                    .Bind(Configuration.GetSection(nameof(HotelConsumerSettings)));
+
+            services.AddOptions<ReservationConsumerSettings>()
+                    .Bind(Configuration.GetSection(nameof(ReservationConsumerSettings)));
+
             services
                 .RegisterInfrastructureCqrsDependencies(Configuration)
                 .RegisterSqlServerInfrastructureDependencies(Configuration);

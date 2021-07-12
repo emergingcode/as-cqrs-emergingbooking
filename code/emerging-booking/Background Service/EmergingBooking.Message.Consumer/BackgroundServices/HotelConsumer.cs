@@ -7,18 +7,23 @@ using EmergingBooking.Message.Consumer.Converters;
 using EmergingBooking.Message.Consumer.Extensions;
 using EmergingBooking.Message.Consumer.Models.Events;
 using EmergingBooking.Message.Consumer.Repository;
+using EmergingBooking.Message.Consumer.Settings;
 
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 namespace EmergingBooking.Message.Consumer.BackgroundServices
 {
     public class HotelConsumer : BackgroundService
     {
+        private readonly HotelConsumerSettings _hotelConsumerSettings;
         private readonly HotelPersistenceSynchronizer _hotelPersistenceSynchronizer;
 
         public HotelConsumer(
-            HotelPersistenceSynchronizer hotelPersistenceSynchronizer)
+            HotelPersistenceSynchronizer hotelPersistenceSynchronizer,
+            IOptions<HotelConsumerSettings> options)
         {
+            _hotelConsumerSettings = options.Value;
             _hotelPersistenceSynchronizer = hotelPersistenceSynchronizer;
         }
 
@@ -34,9 +39,9 @@ namespace EmergingBooking.Message.Consumer.BackgroundServices
 
         private async Task ConsumeHotelMessage()
         {
-            var consumer = new KafkaConsumer<string, InternalEventBase>("hotel-consumer-group",
-                                                                        "kafkaserver:9092",
-                                                                        "dev-emergingbooking-management-hotel-events",
+            var consumer = new KafkaConsumer<string, InternalEventBase>(_hotelConsumerSettings.GroupName,
+                                                                        _hotelConsumerSettings.Server,
+                                                                        _hotelConsumerSettings.TopicName,
                                                                         new HotelEventConverter())
             {
                 OnConsumingAsync = OnHotelConsumingAsync

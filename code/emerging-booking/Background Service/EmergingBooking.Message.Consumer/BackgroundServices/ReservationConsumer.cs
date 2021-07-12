@@ -7,18 +7,23 @@ using EmergingBooking.Message.Consumer.Converters;
 using EmergingBooking.Message.Consumer.Extensions;
 using EmergingBooking.Message.Consumer.Models.Events;
 using EmergingBooking.Message.Consumer.Repository;
+using EmergingBooking.Message.Consumer.Settings;
 
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 namespace EmergingBooking.Message.Consumer.BackgroundServices
 {
     public class ReservationConsumer : BackgroundService
     {
+        private readonly ReservationConsumerSettings _reservationConsumerSettings;
         private readonly ReservationPersistenceSynchronizer _reservationPersistenceSynchronizer;
 
         public ReservationConsumer(
-            ReservationPersistenceSynchronizer reservationPersistenceSynchronizer)
+            ReservationPersistenceSynchronizer reservationPersistenceSynchronizer,
+            IOptions<ReservationConsumerSettings> options)
         {
+            _reservationConsumerSettings = options.Value;
             _reservationPersistenceSynchronizer = reservationPersistenceSynchronizer;
         }
 
@@ -26,20 +31,20 @@ namespace EmergingBooking.Message.Consumer.BackgroundServices
         {
             while (!cancellationToken.IsCancellationRequested)
             {
-                await ConsumeRoomMessage();
+                await ConsumeReservationMessage();
 
                 await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
             }
         }
 
-        private async Task ConsumeRoomMessage()
+        private async Task ConsumeReservationMessage()
         {
-            var consumer = new KafkaConsumer<string, InternalEventBase>("hotel-consumer-group",
-                                                                        "kafkaserver:9092",
-                                                                        "dev-emergingbooking-reservation-booking-events",
+            var consumer = new KafkaConsumer<string, InternalEventBase>(_reservationConsumerSettings.GroupName,
+                                                                        _reservationConsumerSettings.Server,
+                                                                        _reservationConsumerSettings.TopicName,
                                                                         new ReservationEventConverter())
             {
-                OnConsumingAsync = OnRoomConsumingAsync
+                OnConsumingAsync = OnReservationConsumingAsync
             };
 
             var cancellationToken = new CancellationTokenSource();
@@ -52,7 +57,7 @@ namespace EmergingBooking.Message.Consumer.BackgroundServices
             await consumer.ConsumeAsync(cancellationToken);
         }
 
-        private async Task OnRoomConsumingAsync(InternalEventBase reservationEventMessage)
+        private async Task OnReservationConsumingAsync(InternalEventBase reservationEventMessage)
         {
             switch (reservationEventMessage)
             {
