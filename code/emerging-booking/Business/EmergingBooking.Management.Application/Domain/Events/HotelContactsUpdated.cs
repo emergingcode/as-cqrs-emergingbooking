@@ -1,8 +1,6 @@
 ﻿using System;
 
-using EmergingBooking.Management.Application.Domain.Events;
-
-namespace EmergingBooking.Reservation.Application.Domain.Events
+namespace EmergingBooking.Management.Application.Domain.Events
 {
     internal sealed class HotelContactsUpdated : HotelEventBaseV1
     {
@@ -18,7 +16,7 @@ namespace EmergingBooking.Reservation.Application.Domain.Events
             HotelCode = hotelCode;
             Email = email;
             Phone = phone;
-            this.Mobile = mobile;
+            Mobile = mobile;
         }
     }
 }

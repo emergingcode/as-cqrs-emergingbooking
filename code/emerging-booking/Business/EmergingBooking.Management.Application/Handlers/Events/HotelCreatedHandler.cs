@@ -4,7 +4,6 @@ using EmergingBooking.Infrastructure.Cqrs.Events;
 using EmergingBooking.Infrastructure.KafkaProducer;
 using EmergingBooking.Management.Application.Domain.Events;
 using EmergingBooking.Management.Application.Settings;
-using EmergingBooking.Reservation.Application.Domain.Events;
 
 using Microsoft.Extensions.Options;
 

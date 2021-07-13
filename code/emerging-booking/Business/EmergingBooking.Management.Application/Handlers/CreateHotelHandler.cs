@@ -29,9 +29,9 @@ namespace EmergingBooking.Management.Application.Handlers
                                              command.Country,
                                              command.Zipcode);
 
-                var contacts = Contacts.Create(command.Phone,
-                                                     command.Mobile,
-                                                     command.Email);
+                var contacts = Contacts.Create(command.Email,
+                                               command.Phone,
+                                               command.Mobile);
 
                 var domainCombinedValues = Outcome.Combine(address, contacts);
 

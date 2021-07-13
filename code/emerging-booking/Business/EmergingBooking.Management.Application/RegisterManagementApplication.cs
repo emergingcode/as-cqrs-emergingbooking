@@ -7,7 +7,6 @@ using EmergingBooking.Management.Application.Handlers;
 using EmergingBooking.Management.Application.Handlers.Events;
 using EmergingBooking.Management.Application.Repository;
 using EmergingBooking.Management.Application.Settings;
-using EmergingBooking.Reservation.Application.Domain.Events;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

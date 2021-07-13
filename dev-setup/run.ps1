@@ -1,1 +1,1 @@
-.\start-environment.ps1 -WaitTimeForContainersUp 15 -TopicNames dev-emergingbooking-management-hotel-events, dev-emergingbooking-reservation-booking-events -DebugMode=true
+.\start-environment.ps1 -WaitTimeForContainersUp 20 -TopicNames dev-emergingbooking-management-hotel-events, dev-emergingbooking-reservation-booking-events -DebugMode=true

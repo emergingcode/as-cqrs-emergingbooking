@@ -74,7 +74,7 @@ namespace EmergingBooking.Infrastructure.KafkaConsumer
                                 continue;
                             }
 
-                            var entityJsonMessage = consumeResult.Value;
+                            var entityJsonMessage = consumeResult.Message.Value;
 
                             await OnConsumingAsync(entityJsonMessage);
 

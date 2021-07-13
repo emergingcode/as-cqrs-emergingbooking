@@ -1,9 +1,6 @@
 ﻿using System;
 
-using EmergingBooking.Management.Application.Domain;
-using EmergingBooking.Management.Application.Domain.Events;
-
-namespace EmergingBooking.Reservation.Application.Domain.Events
+namespace EmergingBooking.Management.Application.Domain.Events
 {
     internal sealed class HotelCreated : HotelEventBaseV1
     {

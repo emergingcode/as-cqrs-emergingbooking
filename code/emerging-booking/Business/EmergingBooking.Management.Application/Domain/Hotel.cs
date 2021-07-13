@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using EmergingBooking.Infrastructure.Cqrs.Domain;
 using EmergingBooking.Management.Application.Domain.Events;
-using EmergingBooking.Reservation.Application.Domain.Events;
 
 namespace EmergingBooking.Management.Application.Domain
 {
     internal class Hotel : Aggregate
     {
         private IList<Room> _rooms;
-        
+
         public Hotel(string name, int starsOfCategory, Address address,
             Contacts contacts, Guid code = default(Guid), Guid? identifier = null)
                 : base(identifier)
