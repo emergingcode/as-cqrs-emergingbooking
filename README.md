@@ -1,4 +1,4 @@
-# Curso: Arquitetura de Software Moderna usando CQRS
+# Curso: Arquitetura de Software CQRS
 
 Os projetos de tecnologia tem exigido, dos profissionais, conhecimento não só em tecnologia e programação, como também habilidades de alinhar estratégias de negócio com uma arquitetura de software robusta, capaz de ser evolutiva e flexível às mudanças. Permitindo que a entrega de soluções tecnológicas amplifique e dê suporte aos planos de negócios dentro do mundo digital.
 
@@ -10,8 +10,10 @@ Após concluir este curso, você vai ter aprendido as diferenças entre CQS e CQ
 
 Esse curso vai te ajudar a alavancar a sua carreira como profissional de tecnologia.
 
+[Clique aqui](https://www.emergingcode.com.br/arquitetura-de-software-cqrs/) para mais detalhes sobre o curso
+
 ## Público Alvo
-Desenvolvedores Mid e Senior, Arquitetos de Software, Tech Leads, Team Leads, Tech Managers.
+Desenvolvedores Pleno e Senior, Arquitetos de Software, Tech Leads, Team Leads, Tech Managers.
 
 ## Pré-Requisitos Desejaveis
 - Conhecimento básico de desenvolvimento Web
