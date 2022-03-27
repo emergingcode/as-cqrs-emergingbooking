@@ -24,8 +24,7 @@ Desenvolvedores Pleno e Senior, Arquitetos de Software, Tech Leads, Team Leads, 
 
 ## Tecnologias utilizadas
 
-- ASP.NET 5.0
-- Csharp 8.0
+- .NET 5.0
 - [MonoidSharpDotNet](https://github.com/jr-araujo/MonoidSharpDotNet)
 - Background Service
 - Apache Kafka
