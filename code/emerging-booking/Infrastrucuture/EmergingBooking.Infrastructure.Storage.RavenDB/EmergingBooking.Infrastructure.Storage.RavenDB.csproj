@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <AssemblyName>EmergingBooking.Infrastructure.Storage.RavenDB</AssemblyName>
     <RootNamespace>EmergingBooking.Infrastructure.Storage.RavenDB</RootNamespace>
   </PropertyGroup>
