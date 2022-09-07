@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   ravendb:
-    image: ravendb/ravendb
+    image: ravendb/ravendb:5.4.2-ubuntu.20.04-x64
     container_name: ec-ravendb
     hostname: ravendb-server
     networks:
@@ -16,14 +16,14 @@ services:
       RAVEN_Security_UnsecuredAccessAllowed: 'PrivateNetwork'
 
   mssqldata:
-    image: mcr.microsoft.com/mssql/server
+    image: mcr.microsoft.com/mssql/server:2022-latest
     networks:
       - sqlservernet
     entrypoint: /bin/bash
 
   sqlserver:
-    image: mcr.microsoft.com/mssql/server
-    container_name: ec-aswmoderna-mssql
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: ec-mssql
     hostname: mssqls-server
     networks:
       - sqlservernet
@@ -33,42 +33,58 @@ services:
       - /var/opt/mssql
       # we copy our scripts onto the container
       - ./:/usr/src/app
-    # bash will be executed from that path, our scripts folder
+    # bash will be executed from this path, our scripts folder
     working_dir: /usr/src/app
-    # run the entrypoint.sh that will import the data AND sqlserver
-    command: bash -c 'chmod -R a+X ./entrypoint.sh; ./entrypoint.sh & /opt/mssql/bin/sqlservr;'
+    # run the entrypoint.sh that will import the data into sqlserver to create a database and required tables
+    command: bash -c 'chown -R mssql /usr/src/app; ./entrypoint.sh & /opt/mssql/bin/sqlservr;'
     environment:
       ACCEPT_EULA: 'Y'
-      SA_PASSWORD: EmergingB00king@2019
+      MSSQL_SA_PASSWORD: EmergingB00king@2019
       DATABASE_NAME: EmergingBooking
     # don't use this if you don't want to persit data between docker up and down
     volumes_from:
       - mssqldata
 
-  zoo1:
-    image: zookeeper:3.4.9
-    hostname: zoo1
+  kafka-ui:
+    container_name: kafka-ui
+    image: provectuslabs/kafka-ui:latest
     ports:
-      - '2181:2181'
+      - 38080:8080
+    depends_on:
+      - zookeeper0
+      - kafka0
     environment:
-      ZOO_MY_ID: 1
-      ZOO_PORT: 2181
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka0:29092
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper0:2181
+      KAFKA_CLUSTERS_0_JMXPORT: 9997
 
-  kafka:
-    image: confluentinc/cp-kafka:5.5.1
-    hostname: kafka
+  zookeeper0:
+    container_name: ec-zookeeper
+    image: confluentinc/cp-zookeeper:7.0.1
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
     ports:
-      - '9092:9092'
-      - '9999:9999'
+      - 2181:2181
+
+  kafka0:
+    container_name: ec-kafka0
+    image: confluentinc/cp-kafka:7.0.1
+    depends_on:
+      - zookeeper0
+    ports:
+      - 9092:9092
+      - 9997:9997
     environment:
       KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: 'zoo1:2181'
-      KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://kafka:19092,LISTENER_DOCKER_EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_DOCKER_INTERNAL:PLAINTEXT,LISTENER_DOCKER_EXTERNAL:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper0:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka0:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-    depends_on:
-      - zoo1
+      JMX_PORT: 9997
+      KAFKA_JMX_OPTS: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka0 -Dcom.sun.management.jmxremote.rmi.port=9997
 
 networks:
   ravendbnet:

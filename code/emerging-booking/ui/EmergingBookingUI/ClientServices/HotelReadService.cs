@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -26,7 +27,7 @@ namespace EmergingBookingUI.ClientServices
 
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadAsAsync<IReadOnlyCollection<RegisteredRoom>>();
+                return await response.Content.ReadFromJsonAsync<IReadOnlyCollection<RegisteredRoom>>();
             }
             catch (HttpRequestException ex)
             {
@@ -43,7 +44,7 @@ namespace EmergingBookingUI.ClientServices
 
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadAsAsync<IReadOnlyCollection<AvailableRooms>>();
+                return await response.Content.ReadFromJsonAsync<IReadOnlyCollection<AvailableRooms>>();
             }
             catch (HttpRequestException ex)
             {
@@ -59,7 +60,8 @@ namespace EmergingBookingUI.ClientServices
 
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadAsAsync<IReadOnlyCollection<RegisteredHotel>>();
+
+                return await response.Content.ReadFromJsonAsync<IEnumerable<RegisteredHotel>>();
             }
             catch (HttpRequestException ex)
             {
@@ -76,7 +78,7 @@ namespace EmergingBookingUI.ClientServices
 
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadAsAsync<CurrentAddress>();
+                return await response.Content.ReadFromJsonAsync<CurrentAddress>() ?? new CurrentAddress();
             }
             catch (HttpRequestException ex)
             {
@@ -93,7 +95,7 @@ namespace EmergingBookingUI.ClientServices
 
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadAsAsync<CurrentContacts>();
+                return await response.Content.ReadFromJsonAsync<CurrentContacts>() ?? new CurrentContacts() ;
             }
             catch (HttpRequestException ex)
             {

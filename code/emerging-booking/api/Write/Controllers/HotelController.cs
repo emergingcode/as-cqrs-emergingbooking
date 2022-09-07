@@ -48,7 +48,7 @@ namespace EmergingBookingApi.Controllers
             return Created("", result);
         }
 
-        [HttpPut("{hotelCode:guid}/address/update")]
+        [HttpPut("{hotelCode:guid}/address")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<IActionResult> UpdateHotelAddress(Guid hotelCode, HotelAddress hotelAddress)
@@ -69,7 +69,7 @@ namespace EmergingBookingApi.Controllers
             return NoContent();
         }
 
-        [HttpPut("{hotelCode:guid}/contacts/update")]
+        [HttpPut("{hotelCode:guid}/contacts")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<IActionResult> UpdateHotelContacts(Guid hotelCode, HotelContacts hotelContacts)

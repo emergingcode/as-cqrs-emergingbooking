@@ -5,10 +5,10 @@
         public static class HotelEndpoints
         {
             public const string CurrentAddress = "api/hotel/{0}/address/current";
-            public static string UpdateAddress = "api/hotel/{0}/address/update";
+            public static string UpdateAddress = "api/hotel/{0}/address";
 
             public const string CurrentContacts = "api/hotel/{0}/contacts/current";
-            public static string UpdateContacts = "api/hotel/{0}/contacts/update";
+            public static string UpdateContacts = "api/hotel/{0}/contacts";
 
             public const string ListRegisteredHotels = "api/hotel";
             public const string Register = "api/hotel";
