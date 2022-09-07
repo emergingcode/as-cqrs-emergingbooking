@@ -25,7 +25,7 @@ namespace EmergingBookingUI.ClientServices
 
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadAsAsync<ReservationDetail>();
+                return await response.Content.ReadFromJsonAsync<ReservationDetail>() ?? new ReservationDetail();
             }
             catch (HttpRequestException ex)
             {
