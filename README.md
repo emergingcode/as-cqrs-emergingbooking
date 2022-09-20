@@ -1,6 +1,6 @@
 # O que é EmergingBooking?
 
-EmergingBooking é um projeto open-source criado para dar suporte ao curso [AS CQRS](https://www.emergingcode.com.br/arquitetura-de-software-cqrs/), com o objetivo de apresentar a implementação do Padrão _**Arquitetural CQRS**_. Esse é um projeto que faz alusão a sistemas de Reserva de quartos de Hoteis. Para enriquecer a experiência desse projeto, foram utilizadas algumas técnicas do DDD (Domain-Driven Design) para facilitar a implementação da separação de Domínios e implementação das regras de negócio.
+EmergingBooking é um projeto open-source criado para dar suporte ao curso [AS CQRS](https://www.emergingcode.com.br/arquitetura-de-software-cqrs/), com o objetivo de apresentar a implementação do Padrão _**Arquitetural CQRS**_. Esse é um projeto que faz alusão a sistemas de Reserva de quartos de Hoteis. Para enriquecer a experiência desse projeto, foram utilizadas algumas técnicas do DDD (Domain-Driven Design) para facilitar a implementação da separação de Domínios e implementação das regras de negócio. [Clique aqui](https://www.emergingcode.com.br/arquitetura-de-software-cqrs/) para mais detalhes.
 
 O projeto conta com algumas funcionalidades:
 
@@ -20,7 +20,7 @@ Em um sistema de Booking (Reserva), é possível perceber que existem fatores cr
 
 Para dar resposta ao entendimento dos conceitos que separam o universo de implementação CQS do outro universão que é o CQRS (Padrão cunhado pelo [Greg Young](https://www.youtube.com/watch?v=LDW0QWie21s), com base nos fundamentos do _**CQS**_, criado por [Bertrand Mayer](https://en.wikipedia.org/wiki/Bertrand_Meyer)), aplicado em projetos .NET. O projeto foi pensado e desenhado para estruturar uma solução que seja possível suprir a carga operações de escrita, separadamente da carga de operações de leituras, usando para isso o padrão arquitetural CQRS, sem uso de nenhum Framework relacionado com a arquitetura proposta (eg.: MediatR), como pode ser visto no diagrama abaixo.
 
-![](./architectural-solution-blueprint/visao-arquitetura.png)
+![](./reference-architecture/visao-arquitetura.png)
 
 No diagrama, é possível perceber como está pensada a arquitetura da solução, a arquitetura de organização das APIs e como cada um dos componentes dessa solução conversão entre si.
 
@@ -30,13 +30,13 @@ Para mergulhar em todas as decisões desse projeto [Clique aqui](https://www.eme
 
 Os testes manuais, realizados nas APIs deste projeto, foram realizados utilizando o software [Insomnia](https://insomnia.rest/download), e para facilitar os seus estudos, disponibilizamos um arquivo contento todas as configurações já pré-configuradas no arquivo [http-requests.json](./http-requests.json), estão listados na imagem abaixo:
 
-![](./architectural-solution-blueprint/insomnia.png)
+![](./reference-architecture/insomnia.png)
 
 # Visão geral das APIs
 
 A imagem abaixo ilustra, de uma maneira geral, como está organizada a separação das APIs, Escrita e Leitura. Dependendo da responsabilidade da API, a visão da organização dos projetos de negócio, seguem as premissas do Domain-Driven Design ou outro estilo que melhor se adeque a necessidade.
 
-![](./architectural-solution-blueprint/visao-interna-apis.png)
+![](./reference-architecture/visao-interna-apis.png)
 
 ## Tecnologias utilizadas
 
