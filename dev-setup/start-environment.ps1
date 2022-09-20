@@ -22,8 +22,8 @@ Write-Host "Creating Topics"
 
 foreach ($topic in $TopicNames) {
   Write-Host "Creating topic: $topic"
-  $CreateTopicCommand = "kafka-topics --create --topic " + $topic + " --partitions 3 --replication-factor 1 --if-not-exists --zookeeper  zoo1:2181"
-  docker exec -it dev-setup_kafka_1 bash -c "$CreateTopicCommand"
+  $CreateTopicCommand = "cd /bin/ & kafka-topics --bootstrap-server localhost:9092 --create --topic " + $topic + " --partitions 3 --replication-factor 1 --if-not-exists"
+  docker exec -it ec-kafka0 bash -c "$CreateTopicCommand"
   Write-Host "Waiting 3 sec. before creating another topic"
   Start-Sleep -s 3
 }
